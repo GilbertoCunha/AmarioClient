@@ -22,6 +22,10 @@ public class Button {
     this.text = text;
   }
   
+  void reset () {
+    this.isPressed = false;
+  }
+  
   void draw () {
     checkMouseOverlap ();
     if (this.isPressed) fill (this.pressedColor);

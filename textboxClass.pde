@@ -1,6 +1,6 @@
 public class TEXTBOX {
-   public int X = 0, Y = 0, H = 35, W = 200;
-   public int TEXTSIZE = 24;
+   public int X = 0, Y = 0, H = 50, W = 600;
+   public int TEXTSIZE = 30;
    String name;
    
    // COLORS
@@ -16,14 +16,16 @@ public class TEXTBOX {
    public int TextLength = 0;
 
    private boolean selected = false;
+   private boolean showText = true;
    
    TEXTBOX() {
       // CREATE OBJECT DEFAULT TEXTBOX
    }
    
-   TEXTBOX(int x, int y, int w, int h, String name) {
+   TEXTBOX(int x, int y, int w, int h, String name, boolean showText) {
       X = x; Y = y; W = w; H = h;
       this.name = name;
+      this.showText = showText;
    }
    
    void DRAW() {
@@ -46,8 +48,14 @@ public class TEXTBOX {
       // DRAWING THE TEXT ITSELF
       fill(Foreground);
       textSize(TEXTSIZE);
-      text(Text, X + (textWidth("a") / 2), Y + TEXTSIZE);
-      text(name, X + (textWidth("a") / 2) - 150, Y + TEXTSIZE);
+      String show;
+      if (this.showText) show = Text;
+      else {
+        show = "";
+        for (int i=0; i<Text.length(); ++i) show += "*";
+      }
+      text(show, X + (textWidth("a") / 2), Y + TEXTSIZE); 
+      text(name, X + (textWidth("a") / 2) - 200, Y + TEXTSIZE);
    }
    
    // IF THE KEYCODE IS ENTER RETURN 1

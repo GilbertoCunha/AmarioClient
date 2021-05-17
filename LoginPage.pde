@@ -1,5 +1,7 @@
-String username, password; // Strings onde são guardados o username e a password
-ArrayList<TEXTBOX> textboxes = new ArrayList<TEXTBOX>(); // Caixas de texto de username e password
+String username, password, response = null; // Strings onde são guardados o username e a password
+TEXTBOX Username, Password;
+User localuser;
+boolean loginSuccessful = false;
 
 // Definir cores dos botões
 color base = color (140, 140, 140);
@@ -12,18 +14,17 @@ Button CreateAccount;
 
 void initSetup () {
   // Criar textbox para o username
-  TEXTBOX username = new TEXTBOX();
-  username.X = width/2;
-  username.Y = height/2 - 50;
-  username.name = "Username";
-  textboxes.add(username);
+  Username = new TEXTBOX();
+  Username.X = width/2;
+  Username.Y = height/2 - 50;
+  Username.name = "Username";
   
   // Criar textbox para a password
-  TEXTBOX password = new TEXTBOX();
-  password.X = width/2;
-  password.Y = height/2 + 50;
-  password.name = "Password";
-  textboxes.add(password);
+  Password = new TEXTBOX();
+  Password.X = width/2;
+  Password.Y = height/2 + 50;
+  Password.name = "Password";
+  Password.showText = false;
   
   // Criar os botões de login e de criar conta
   Login = new Button (width / 3, 4 * height / 5, 400, 50);
@@ -32,38 +33,77 @@ void initSetup () {
   CreateAccount.setup (base, highlight, pressed, "Create Account");
 }
 
-void drawInitScreen () {
-  background(255);
-  for (TEXTBOX t: textboxes) t.DRAW();
-  Login.draw();
-  CreateAccount.draw();
-  if (Login.isPressed()) LoginPressed ();
-  else if (CreateAccount.isPressed()) CreateAccountPressed ();
-}
-
 void initKeyPressed () {
-  int i=0;
-  for (TEXTBOX t: textboxes) {
-    if (t.KEYPRESSED (key, keyCode)) { // User has pressed ENTER
-      if (i==0) username = textboxes.get(0).Text;
-      else if (i==1) password = textboxes.get(1).Text;
-    } 
-    i += 1;
-  }
+  Username.KEYPRESSED (key, keyCode);
+  Password.KEYPRESSED (key, keyCode);
 }
 
 void initMousePressed () {
-  for (TEXTBOX t: textboxes) t.PRESSED (mouseX, mouseY);
+  Username.PRESSED (mouseX, mouseY);
+  Password.PRESSED (mouseX, mouseY);
   Login.buttonMousePressed ();
   CreateAccount.buttonMousePressed ();
 }
 
 void LoginPressed () {
-  textSize (20);
-  text ("Logged In !", width / 2 - 50, Login.posY + 80);
+  // Create user
+  System.out.println(Username.Text);
+  localuser = new User(Username.Text, Password.Text);
+  
+  // Connect with the server
+  localuser.connect("localhost", 23);
+  response = localuser.request(":login " + Username.Text + " " + Password.Text);
+  response = LoginResponse (response);
+  localuser.close();
+  
+  // Show the authentication result
+  Login.reset();
 }
 
 void CreateAccountPressed () {
-  textSize (20);
-  text ("Account created !", width / 2 - 80, Login.posY + 80);
+  // Create user
+  localuser = new User();
+  
+  // Connect with the server
+  localuser.connect("localhost", 23);
+  response = localuser.request(":create_account " + Username.Text + " " + Password.Text);
+  response = CreateAccountResponse (response);
+  localuser.close();
+  
+  // Show the authentication result
+  CreateAccount.reset();
+}
+
+void drawInitScreen () {
+  background(255);
+  Username.DRAW();
+  Password.DRAW();
+  Login.draw();
+  CreateAccount.draw();
+  if (Login.isPressed()) LoginPressed ();
+  else if (CreateAccount.isPressed()) CreateAccountPressed ();
+  if (response != null) {
+    textSize (20);
+    text (response, Login.posX, Login.posY + 80);
+  }
+}
+
+String LoginResponse (String response) {
+  String r = "";
+  System.out.println("Login Response: \"" + response + "\"");
+  if (response.equals("user_not_found")) r = "User not found";
+  else if (response.equals("wrong_authentication")) r = "Username or password incorrect";
+  else if (response.equals("ok")) {
+    r = "Logged In";
+    gameScreen = 1;
+  }
+  return r;
+}
+
+String CreateAccountResponse (String response) {
+  String r = "";
+  System.out.println("Create Account Response: \"" + response + "\"");
+  if (response.equals("user_exists")) r = "User already in use";
+  else if (response.equals("ok")) r = "Account successfully created";
+  return r;
 }
