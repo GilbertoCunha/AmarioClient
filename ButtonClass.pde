@@ -1,32 +1,36 @@
 public class Button {
   String text;
-  int textSize = 40;
-  int posX, posY;
-  int sizeX, sizeY;
-  color baseColor, highlightColor, foregroundColor = color(0, 0, 0);
-  boolean isPressed = false, mouseOver = false;
+  private int textSize = 40;
+  public int posX, posY;
+  public int sizeX, sizeY;
+  private color baseColor, highlightColor, pressedColor, foregroundColor = color(0, 0, 0);
+  private boolean isPressed = false, mouseOver = false;
   
   Button (int posX, int posY, int sizeX, int sizeY) {
-    this.posX = posX;
-    this.posY = posY;
     this.sizeX = sizeX;
     this.sizeY = sizeY;
+    this.posX = posX - this.sizeX / 2;
+    this.posY = posY - this.sizeY / 2;
   }
   
-  void setup (color base, color highlight, String text) {
+  boolean isPressed () { return this.isPressed; }
+  
+  void setup (color base, color highlight, color pressed, String text) {
     this.baseColor = base;
     this.highlightColor = highlight;
+    this.pressedColor = pressed;
     this.text = text;
   }
   
   void draw () {
     checkMouseOverlap ();
-    if (mouseOver) fill(this.highlightColor);
+    if (this.isPressed) fill (this.pressedColor);
+    else if (this.mouseOver) fill(this.highlightColor);
     else fill (this.baseColor);
     rect(this.posX, this.posY, this.sizeX, this.sizeY);
     fill(this.foregroundColor);
     textSize (this.textSize);
-    text (this.text, posX, posY);
+    text (this.text, this.posX + textWidth("a") / 2, this.posY + this.textSize);
   }
   
   void checkMouseOverlap () {
@@ -36,7 +40,7 @@ public class Button {
       this.mouseOver = false;
   }
   
-  void mousePressed () {
-    this.isPressed = this.mouseOver;
+  void buttonMousePressed () {
+    if (this.mouseOver) this.isPressed = true;
   }
 }

@@ -1,36 +1,44 @@
 String username, password; // Strings onde são guardados o username e a password
 ArrayList<TEXTBOX> textboxes = new ArrayList<TEXTBOX>(); // Caixas de texto de username e password
-Button Login = new Button (width / 3, height, 200, 50);
-Button CreateAccount = new Button (2 * width / 3, height, 200, 50);
+
+// Definir cores dos botões
+color base = color (140, 140, 140);
+color highlight = color (150, 150, 150);
+color pressed = color (220, 220, 220);
+
+// Botões de login e criar conta
+Button Login;
+Button CreateAccount;
 
 void initSetup () {
+  // Criar textbox para o username
   TEXTBOX username = new TEXTBOX();
   username.X = width/2;
-  username.Y = height/2 + 50;
+  username.Y = height/2 - 50;
+  username.name = "Username";
   textboxes.add(username);
   
+  // Criar textbox para a password
   TEXTBOX password = new TEXTBOX();
   password.X = width/2;
-  password.Y = height/2 - 50;
+  password.Y = height/2 + 50;
+  password.name = "Password";
   textboxes.add(password);
   
-  Login.setup (color(140, 140, 140), color(160, 160, 160), "Login");
-  CreateAccount.setup (color(140, 140, 140), color(160, 160, 160), "Create Account");
-  System.out.println("Width: " + width + " | Height: " + height);
+  // Criar os botões de login e de criar conta
+  Login = new Button (width / 3, 4 * height / 5, 400, 50);
+  Login.setup (base, highlight, pressed, "Login");
+  CreateAccount = new Button (2 * width / 3, 4 * height / 5, 400, 50);
+  CreateAccount.setup (base, highlight, pressed, "Create Account");
 }
 
 void drawInitScreen () {
   background(255);
-  // textAlign(CENTER);
   for (TEXTBOX t: textboxes) t.DRAW();
   Login.draw();
   CreateAccount.draw();
-  // if (inputTextState == 0) text("Username: " + inputText, height/2, width/2);
-  // else if (inputTextState == 1) text("Username detected\n", height/2, width/2);
-}
-
-void initMousePressed () {
-  for (TEXTBOX t: textboxes) t.PRESSED (mouseX, mouseY);
+  if (Login.isPressed()) LoginPressed ();
+  else if (CreateAccount.isPressed()) CreateAccountPressed ();
 }
 
 void initKeyPressed () {
@@ -42,4 +50,20 @@ void initKeyPressed () {
     } 
     i += 1;
   }
+}
+
+void initMousePressed () {
+  for (TEXTBOX t: textboxes) t.PRESSED (mouseX, mouseY);
+  Login.buttonMousePressed ();
+  CreateAccount.buttonMousePressed ();
+}
+
+void LoginPressed () {
+  textSize (20);
+  text ("Logged In !", width / 2 - 50, Login.posY + 80);
+}
+
+void CreateAccountPressed () {
+  textSize (20);
+  text ("Account created !", width / 2 - 80, Login.posY + 80);
 }
