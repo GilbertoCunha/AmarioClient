@@ -1,7 +1,7 @@
 int gameScreen = 0;
 
 void setup () {
-  fullScreen();
+  fullScreen ();
   if (gameScreen == 0) initSetup ();
 }
 
