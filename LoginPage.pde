@@ -27,10 +27,10 @@ void initSetup () {
   Password.showText = false;
   
   // Criar os botões de login e de criar conta
-  Login = new Button (width / 3, 4 * height / 5, 400, 50);
-  Login.setup (base, highlight, pressed, "Login");
-  CreateAccount = new Button (2 * width / 3, 4 * height / 5, 400, 50);
-  CreateAccount.setup (base, highlight, pressed, "Create Account");
+  Login = new Button (width / 3, 4 * height / 5, 400, 80);
+  Login.setup (base, highlight, pressed, "Login", true);
+  CreateAccount = new Button (2 * width / 3, 4 * height / 5, 400, 80);
+  CreateAccount.setup (base, highlight, pressed, "Create Account", true);
 }
 
 void initKeyPressed () {
@@ -84,7 +84,8 @@ void drawInitScreen () {
   else if (CreateAccount.isPressed()) CreateAccountPressed ();
   if (response != null) {
     textSize (20);
-    text (response, Login.posX, Login.posY + 80);
+    textAlign(LEFT);
+    text (response, Login.posX, Login.posY + 100);
   }
 }
 

@@ -28,7 +28,7 @@ public class User {
 	
 	public void connect (String ip, int port) {
 		try{
-			Socket s = new Socket(ip, port);
+			s = new Socket(ip, port);
 			input = s.getInputStream();
 			out = new PrintStream(s.getOutputStream());
 			read = new BufferedReader(new InputStreamReader(input)); 

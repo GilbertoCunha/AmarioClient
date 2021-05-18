@@ -54,7 +54,9 @@ public class TEXTBOX {
         show = "";
         for (int i=0; i<Text.length(); ++i) show += "*";
       }
+      textAlign(LEFT);
       text(show, X + (textWidth("a") / 2), Y + TEXTSIZE); 
+      textAlign(LEFT);
       text(name, X + (textWidth("a") / 2) - 200, Y + TEXTSIZE);
    }
    
