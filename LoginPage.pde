@@ -97,6 +97,8 @@ String LoginResponse (String response) {
   else if (response.equals("ok")) {
     r = "Logged In";
     gameScreen = 1;
+    Username.Text = "";
+    Password.Text = "";
   }
   return r;
 }

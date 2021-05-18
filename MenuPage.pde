@@ -37,6 +37,31 @@ void MenuMousePressed () {
   Logout.buttonMousePressed();
 }
 
+String LogoutResponse (String response) {
+  String r = "";
+  System.out.println("Login Response: \"" + response + "\"");
+  if (response.equals("user_not_found")) r = "User not found";
+  else if (response.equals("wrong_authentication")) r = "Username or password incorrect";
+  else if (response.equals("ok")) {
+    r = "Logged Out";
+    gameScreen = 0;
+  }
+  return r;
+}
+
+void LogoutPressed () {
+  // Create user
+  System.out.println(Username.Text);
+  
+  // Connect with the server
+  localuser.connect("localhost", 23);
+  response = localuser.request(":logout " + localuser.username + " " + localuser.password);
+  response = LogoutResponse (response);
+  localuser.close();
+  
+  // Show the authentication result
+  Logout.reset();
+}
 
 void drawMenuScreen () {
   background(255);
@@ -48,5 +73,11 @@ void drawMenuScreen () {
   if (Instructions.isPressed()) {
     gameScreen = 3;
     Instructions.reset();
+  }
+  else if (Logout.isPressed()) LogoutPressed();
+  else if (Leaderboard.isPressed()) {
+    gameScreen = 4;
+    Leaderboard.reset();
+    getLeaderboard();
   }
 }
