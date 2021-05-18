@@ -28,6 +28,11 @@ public class TEXTBOX {
       this.showText = showText;
    }
    
+   void reset () {
+     this.Text = "";
+     this.TextLength = 0;
+   }
+   
    void DRAW() {
       // DRAWING THE BACKGROUND
       if (selected) {

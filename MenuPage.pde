@@ -1,4 +1,3 @@
-
 int menuTextSize = 60;
 
 // Botões de login e criar conta
@@ -10,19 +9,19 @@ PImage img;
 
 void initMenuSetup() {
   
-  Play = new Button (width / 3 + 105, 2 * height / 5, 400, 200);
+  Play = new Button (width / 4 + width/20, 2 * height / 5, width/3, width/10);
   Play.setup (base, highlight, pressed, "Play", true);
   Play.textSize = menuTextSize;
   
-  Leaderboard = new Button (2 * width / 3 - 105, 2 * height / 5, 400, 200);
+  Leaderboard = new Button (3 * width / 4 - width/20, 2 * height / 5, width/3, width/10);
   Leaderboard.setup (base, highlight, pressed, "Leaderboard", true);
   Leaderboard.textSize = menuTextSize;
   
-  Instructions = new Button ( width / 2, 3 * height / 5 + 10, 830, 200);
+  Instructions = new Button ( width / 2, 3 * height / 5, width/2, width/10);
   Instructions.setup (base, highlight, pressed, "Instructions", true);
   Instructions.textSize = menuTextSize;
   
-  Logout = new Button ( width - 175 , height - 25, 350, 70);
+  Logout = new Button ( width - 2 * width/15, height - 2 * width/28, width/5, width/14);
   Logout.setup (base, highlight, pressed, "Logout", true); 
   Logout.textSize = menuTextSize;
   
@@ -50,9 +49,6 @@ String LogoutResponse (String response) {
 }
 
 void LogoutPressed () {
-  // Create user
-  System.out.println(Username.Text);
-  
   // Connect with the server
   localuser.connect("localhost", 23);
   response = localuser.request(":logout " + localuser.username + " " + localuser.password);

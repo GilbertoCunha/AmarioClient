@@ -5,9 +5,7 @@ Button lbBack;
 void LeaderboardResponse(String response) {
   String[] userdata = response.split(",", 0);
   int i = 0;
-  for (String s: userdata){
-    i++;
-  }
+  for (String s: userdata) i++;
   
   lb = new String [i][2];
   i = 0;
@@ -26,7 +24,7 @@ void getLeaderboard() {
 }
 
 void setupLeaderboard() {
-  lbBack = new Button (width/4, height/10, 200, 100);
+  lbBack = new Button (5 * width/6, 9 * height/10, width/8, width/20);
   lbBack.setup (base, highlight, pressed, "Go Back", true);
 }
 

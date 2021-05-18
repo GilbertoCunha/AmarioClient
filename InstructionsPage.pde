@@ -10,7 +10,7 @@ void setupInstructions () {
   a = "Accelerate left";
   d = "Accelerate right";
   
-  GoBack = new Button (width/4, height/10, 200, 100);
+  GoBack = new Button (width/8, height/10, width/8, height/10);
   GoBack.setup (base, highlight, pressed, "Go Back", true);
   
 }  
@@ -24,29 +24,29 @@ void drawInstructions () {
   
   textSize(100);
   textAlign(CENTER);
-  text("Instructions", width/2, height/10);
+  text("Instructions", width/2, height/7);
   
-  image(wimg,width/4, height/5,200,200);
+  image(wimg, width/4, height/5, width/10, width/10);
   fill(200);
-  rect(width/4 + 300, height/5, 800, 200);
+  rect(width/4 + width/8, 4.2 * height/20, 3 * width/5, height/8);
   textAlign(CENTER);
   textSize(70);
   fill(0);
-  text(w,width/4 + 700, height/5 + 135);
+  text(w, width/4 + width/8 + 3 * width/10, 1.5 * height/5);
   
-  image(aimg,width/4, height/2,200,200);
+  image(aimg, width/4, height/2, width/10, width/10);
   fill(200);
-  rect(width/4 + 300, height/2, 800, 200);
+  rect(width/4 + width/8, height/2 + height/50, 3 * width/5, height/8);
   fill(0);
   textSize(70);
-  text(a,width/4 + 700, height/2 + 135);
+  text(a, width/4 + width/8 + 3 * width/10, height/2 + height/9);
   
-  image(dimg,width/4, 4 * height/5,200,200);
+  image(dimg,width/4, 4 * height/5, width/10, width/10);
   fill(200);
-  rect(width/4 + 300, 4 * height/5, 800, 200);
+  rect(width/4 + width/8, 4.08 * height/5, 3 * width/5, height/8);
   fill(0);
   textSize(70);
-  text(d,width/4 + 700, 4 * height/5 + 135);
+  text(d, width/4 + width/8 + 3 * width/10, 4 * height/5 + height/10);
   
   GoBack.draw();
   
