@@ -1,4 +1,4 @@
-int gameScreen = 0;
+int gameScreen = 2;
 
 void setup () {
   fullScreen ();
@@ -6,6 +6,7 @@ void setup () {
   initMenuSetup ();
   setupInstructions();
   setupLeaderboard();
+  setupGame();
 }
 
 void draw () {
@@ -25,4 +26,5 @@ void mousePressed () {
 
 void keyPressed () {
   if (gameScreen == 0) initKeyPressed ();
+  if (gameScreen == 2) playerkeyPressed ();
 }
