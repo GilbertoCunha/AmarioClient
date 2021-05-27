@@ -59,6 +59,30 @@ void LogoutPressed () {
   Logout.reset();
 }
 
+String PlayResponse (String response) {
+  String r = "";
+  System.out.println("Response: \"" + response + "\"");
+  if (response.equals("game full")) r = "Game is full";
+  else if (response.equals("wrong authentication")) r = "Username or password incorrect";
+  else if (response.equals("user added")) {
+    r = "Entered game";
+    gameScreen = 2;
+  }
+  return r;
+  
+}
+
+void PlayPressed () {
+  // Connect with the server
+  localuser.connect("localhost", 24);
+  response = localuser.request(":check " + localuser.username + " " + localuser.password);
+  response = PlayResponse (response);
+  localuser.close();
+  
+  // Show the authentication result
+  Logout.reset();
+}
+
 void drawMenuScreen () {
   background(255);
   image(img,0,0,width,height);
@@ -76,4 +100,5 @@ void drawMenuScreen () {
     Leaderboard.reset();
     getLeaderboard();
   }
+  else if (Play.isPressed()) PlayPressed();
 }

@@ -14,7 +14,10 @@ void drawPlayer () {
 }
 
 void playerkeyPressed () {
-  if (keyCode == UP) y_pos-=5;
+  if (keyCode == UP){
+    System.out.println("Key up pressed\n");
+    y_pos-=5;
+  }
   else if (keyCode == LEFT) x_pos-=5;
   else if (keyCode == RIGHT) x_pos+=5;
 }

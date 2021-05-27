@@ -1,4 +1,4 @@
-int gameScreen = 2;
+int gameScreen = 0;
 
 void setup () {
   fullScreen ();
@@ -19,12 +19,12 @@ void draw () {
 
 void mousePressed () {
   if (gameScreen == 0) initMousePressed ();
-  if (gameScreen == 1) MenuMousePressed ();
-  if (gameScreen == 3) InstructionsMousePressed ();
-  if (gameScreen == 4) LbMousePressed ();
+  else if (gameScreen == 1) MenuMousePressed ();
+  else if (gameScreen == 3) InstructionsMousePressed ();
+  else if (gameScreen == 4) LbMousePressed ();
 }
 
 void keyPressed () {
   if (gameScreen == 0) initKeyPressed ();
-  if (gameScreen == 2) playerkeyPressed ();
+  else if (gameScreen == 2) playerkeyPressed ();
 }
