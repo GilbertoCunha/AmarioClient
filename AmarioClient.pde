@@ -1,4 +1,4 @@
-int gameScreen = 0;
+int gameScreen = 2;
 
 void setup () {
   fullScreen ();
@@ -27,4 +27,8 @@ void mousePressed () {
 void keyPressed () {
   if (gameScreen == 0) initKeyPressed ();
   else if (gameScreen == 2) playerkeyPressed ();
+}
+
+void keyReleased () {
+  if (gameScreen == 2) playerkeyReleased ();
 }

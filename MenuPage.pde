@@ -77,10 +77,10 @@ void PlayPressed () {
   localuser.connect("localhost", 24);
   response = localuser.request(":check " + localuser.username + " " + localuser.password);
   response = PlayResponse (response);
-  localuser.close();
+  // localuser.close();
   
   // Show the authentication result
-  Logout.reset();
+  Play.reset();
 }
 
 void drawMenuScreen () {
