@@ -56,8 +56,6 @@ public class Player {
         size = (int) (1000 * Float.parseFloat(nums[3])); 
         score = Integer.parseInt(nums[4]); 
         
-        System.out.println("width: " + width + " | height: " + height + " | nums[1]: " + nums[1] + " | x: " + x + " | y: " + y + " | size: " + size + " | score: " + score);
-        
         if (!players.containsKey(nums[0])) {
           playerslock.lock();
           players.put(nums[0], new Player(nums[0]));

@@ -13,8 +13,6 @@ void setupGame(){
   keys = new HashMap<Integer,Boolean>();
   receiver = new Thread(new Receiver());
   receiver.start();
-  hm_iterator = players.entrySet().iterator();
-  
 }
 
 
@@ -26,6 +24,7 @@ void playerkeyPressed () {
     else if (key == 'd' || key == 'D' || keyCode == RIGHT ) keypressed = "d";
     if (keypressed != "") {
       keys.put(keyCode, true);
+      System.out.println(":press " + keypressed);
       player.send(":press " + keypressed);
     }
   }
@@ -39,16 +38,16 @@ void playerkeyReleased () {
     else if (key == 'd' || key == 'D' || keyCode == RIGHT ) keyreleased = "d";
     if (keyreleased != "") {
       keys.remove(keyCode);
+      System.out.println(":release " + keyreleased);
       player.send(":release " + keyreleased);
     }
   }
 }
 
 void drawGameScreen () {
-  System.out.println("Drawing");
   background(255);
+  hm_iterator = players.entrySet().iterator();
   while(hm_iterator.hasNext()) {
-    System.out.println("Drawing Player");
     Map.Entry me = (Map.Entry) hm_iterator.next();
     Player p = (Player) me.getValue();
     p.draw();
