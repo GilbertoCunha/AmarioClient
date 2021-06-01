@@ -97,6 +97,7 @@ String LoginResponse (String response) {
   else if (response.equals("ok")) {
     r = "Logged In";
     gameScreen = 1;
+    initMenuSetup();
     Username.reset();
     Password.reset();
   }

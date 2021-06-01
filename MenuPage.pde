@@ -6,6 +6,10 @@ Button Leaderboard;
 Button Instructions;
 Button Logout;
 PImage img;
+HashMap<String,Player> players;
+Lock playerslock;
+Player player;
+
 
 void initMenuSetup() {
   
@@ -24,6 +28,14 @@ void initMenuSetup() {
   Logout = new Button ( width - 2 * width/15, height - 2 * width/28, width/5, width/14);
   Logout.setup (base, highlight, pressed, "Logout", true); 
   Logout.textSize = menuTextSize;
+  
+  playerslock = new ReentrantLock();
+  players = new HashMap<String,Player>();
+  players.put(localuser.username,new Player(localuser.username));
+  
+  playerslock.lock();
+  player = players.get(localuser.username);
+  playerslock.unlock();
   
   img  = loadImage("bobpicanha.png");
   
@@ -74,10 +86,9 @@ String PlayResponse (String response) {
 
 void PlayPressed () {
   // Connect with the server
-  localuser.connect("localhost", 24);
-  response = localuser.request(":check " + localuser.username + " " + localuser.password);
+  player.connect("localhost", 24);
+  response = player.request(":check " + localuser.username + " " + localuser.password);
   response = PlayResponse (response);
-  // localuser.close();
   
   // Show the authentication result
   Play.reset();

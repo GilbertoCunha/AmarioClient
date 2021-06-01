@@ -1,12 +1,12 @@
-int gameScreen = 2;
+int gameScreen = 0;
 
 void setup () {
   fullScreen ();
   initSetup ();
-  initMenuSetup ();
+  // initMenuSetup();
   setupInstructions();
   setupLeaderboard();
-  setupGame();
+  // setupGame();
 }
 
 void draw () {

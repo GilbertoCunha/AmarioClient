@@ -1,21 +1,22 @@
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 int x_pos, y_pos;
 int size = width/4;
 int player_color = color(0);
 HashMap<Integer,Boolean> keys;
+Thread receiver;
+Iterator hm_iterator;
 
 void setupGame(){
   keys = new HashMap<Integer,Boolean>();
-  x_pos = width/5;
-  y_pos = height/5;
+  receiver = new Thread(new Receiver());
+  receiver.start();
+  hm_iterator = players.entrySet().iterator();
   
 }
 
-void drawPlayer () {
-  fill(player_color);
-  ellipse(x_pos, y_pos, size, size);
-}
 
 void playerkeyPressed () {
   String keypressed = "";
@@ -25,14 +26,9 @@ void playerkeyPressed () {
     else if (key == 'd' || key == 'D' || keyCode == RIGHT ) keypressed = "d";
     if (keypressed != "") {
       keys.put(keyCode, true);
-      response = localuser.request(":press " + keypressed);
-      response = pressedResponse (response);
+      player.send(":press " + keypressed);
     }
   }
-}
-
-String pressedResponse (String response) {
-  
 }
 
 void playerkeyReleased () {
@@ -43,17 +39,18 @@ void playerkeyReleased () {
     else if (key == 'd' || key == 'D' || keyCode == RIGHT ) keyreleased = "d";
     if (keyreleased != "") {
       keys.remove(keyCode);
-      response = localuser.request(":release " + keyreleased);
-      response = releasedResponse (response);
+      player.send(":release " + keyreleased);
     }
   }
 }
 
-String releasedResponse (String response) {
-  
-}
-
 void drawGameScreen () {
   background(255);
-  drawPlayer();
+  while(hm_iterator.hasNext()) {
+    Map.Entry me = (Map.Entry) hm_iterator.next();
+    Player p = (Player) me.getValue();
+    p.draw();
+  }
+  
+  
 }
