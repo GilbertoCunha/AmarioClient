@@ -53,7 +53,7 @@ public class Player {
         
         x = (int) (width * Double.parseDouble(nums[1]));
         y = (int) (height * Double.parseDouble(nums[2])); 
-        size = (int) (1000 * Float.parseFloat(nums[3])); 
+        size = (int) (height * Float.parseFloat(nums[3])); 
         score = Integer.parseInt(nums[4]); 
         
         if (!players.containsKey(nums[0])) {
@@ -100,7 +100,8 @@ public class Player {
     lock.lock();
     if (this.state != null) {
       fill(200);
-      ellipse(state.x, state.y, state.size, state.size);
+      int size = 2 * state.size;
+      ellipse(state.x, state.y, size, size);
     }
     lock.unlock();  
   }
