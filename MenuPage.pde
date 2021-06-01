@@ -79,6 +79,7 @@ String PlayResponse (String response) {
   else if (response.equals("user added")) {
     r = "Entered game";
     gameScreen = 2;
+    setupGame();
   }
   return r;
   

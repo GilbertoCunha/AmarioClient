@@ -45,8 +45,10 @@ void playerkeyReleased () {
 }
 
 void drawGameScreen () {
+  System.out.println("Drawing");
   background(255);
   while(hm_iterator.hasNext()) {
+    System.out.println("Drawing Player");
     Map.Entry me = (Map.Entry) hm_iterator.next();
     Player p = (Player) me.getValue();
     p.draw();

@@ -3,6 +3,7 @@ class Receiver implements Runnable {
   
   public void run() {
     while(!exit) {
+      System.out.println("Receiving");
       player.receive();
     }
   }

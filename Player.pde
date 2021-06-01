@@ -25,6 +25,7 @@ public class Player {
     // Just to establish connections
     this.playername = name;
     this.lock = new ReentrantLock();
+    this.state = null;
   }
   
   public void connect (String ip, int port) {
@@ -50,18 +51,21 @@ public class Player {
         line = read.readLine();
         nums = line.split(" ");
         
-        x = Integer.parseInt(nums[1]);
-        y = Integer.parseInt(nums[2]); 
-        size = Integer.parseInt(nums[3]); 
+        x = (int) (width * Double.parseDouble(nums[1]));
+        y = (int) (height * Double.parseDouble(nums[2])); 
+        size = (int) (1000 * Float.parseFloat(nums[3])); 
         score = Integer.parseInt(nums[4]); 
+        
+        System.out.println("width: " + width + " | height: " + height + " | nums[1]: " + nums[1] + " | x: " + x + " | y: " + y + " | size: " + size + " | score: " + score);
         
         if (!players.containsKey(nums[0])) {
           playerslock.lock();
           players.put(nums[0], new Player(nums[0]));
           playerslock.unlock();
         } 
-        
+        playerslock.lock();
         players.get(nums[0]).changeState(x, y, size, score);
+        playerslock.unlock();
       }
     
     } catch (Exception e) { System.out.println(e); }
@@ -95,9 +99,11 @@ public class Player {
   }
   
   public void draw() {
-    fill(200);
     lock.lock();
-    ellipse(state.x, state.y, state.size, state.size);
+    if (this.state != null) {
+      fill(200);
+      ellipse(state.x, state.y, state.size, state.size);
+    }
     lock.unlock();  
   }
   
