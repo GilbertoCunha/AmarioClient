@@ -58,8 +58,9 @@ public class Player {
       
       if (nums[1].equals("left")) {
         playerslock.lock();
-        players.remove(nums[1]);
+        players.remove(nums[0]);
         playerslock.unlock();
+        System.out.println(nums[0] + " removed");
       } else {
         int x, y, size, score;
         float angle;
