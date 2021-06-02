@@ -3,13 +3,25 @@ import java.util.concurrent.locks.ReentrantLock;
 
 class State {
   int x, y, size, score;
+  float angle;
   
-  State (int x, int y, int size, int score) {
+  State (int x, int y, float angle, int size, int score) {
     this.x = x;
-    this.y =y;
+    this.y = y;
+    this.angle = angle;
     this.size = size;
     this.score = score;
   }
+}
+
+void drawArrow(int cx, int cy, int len, float angle){
+  pushMatrix();
+  translate(cx, cy);
+  rotate(angle);
+  line(0,0,len, 0);
+  line(len, 0, len - 8, -8);
+  line(len, 0, len - 8, 8);
+  popMatrix();
 }
 
 public class Player {
@@ -42,10 +54,12 @@ public class Player {
   public void receive () {
     try {
       String line = read.readLine();
-      int n_players, n_creatures, x, y, size, score;
       String[] nums = line.split(" ");
-      n_players = Integer.parseInt(nums[0]);
-      n_creatures = Integer.parseInt(nums[1]);
+      
+      int x, y, size, score;
+      float angle;
+      int n_players = Integer.parseInt(nums[0]);
+      int n_creatures = Integer.parseInt(nums[1]);
       
       for (int i = 0; i < n_players; i++ ) {
         line = read.readLine();
@@ -53,8 +67,9 @@ public class Player {
         
         x = (int) (width * Double.parseDouble(nums[1]));
         y = (int) (height * Double.parseDouble(nums[2])); 
-        size = (int) (height * Float.parseFloat(nums[3])); 
-        score = Integer.parseInt(nums[4]); 
+        angle = Float.parseFloat(nums[3]);
+        size = (int) (height * Float.parseFloat(nums[4])); 
+        score = Integer.parseInt(nums[5]); 
         
         if (!players.containsKey(nums[0])) {
           playerslock.lock();
@@ -62,7 +77,7 @@ public class Player {
           playerslock.unlock();
         } 
         playerslock.lock();
-        players.get(nums[0]).changeState(x, y, size, score);
+        players.get(nums[0]).changeState(x, y, angle, size, score);
         playerslock.unlock();
       }
     
@@ -90,9 +105,9 @@ public class Player {
     } catch (Exception e) { System.out.println(e); }
   }
   
-  public void changeState(int x, int y, int size, int score) {
+  public void changeState(int x, int y, float angle, int size, int score) {
     this.lock.lock();
-    this.state = new State(x,y,size,score);
+    this.state = new State(x, y, angle, size, score);
     this.lock.unlock();  
   }
   
@@ -100,8 +115,13 @@ public class Player {
     lock.lock();
     if (this.state != null) {
       fill(200);
+      stroke(200);
+      strokeWeight(0);
       int size = 2 * state.size;
       ellipse(state.x, state.y, size, size);
+      stroke(0);
+      strokeWeight(2);
+      drawArrow(state.x, state.y, state.size, state.angle);
     }
     lock.unlock();  
   }

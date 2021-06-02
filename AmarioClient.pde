@@ -10,6 +10,7 @@ void setup () {
 }
 
 void draw () {
+  // if (frameRate < 50 && frameCount > 300) System.out.println("FPS: " + frameRate + " | Count: " + frameCount);
   if (gameScreen == 0) drawInitScreen ();
   else if (gameScreen == 1) drawMenuScreen ();
   else if (gameScreen == 2) drawGameScreen ();
