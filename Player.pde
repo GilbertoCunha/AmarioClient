@@ -63,10 +63,11 @@ public class Player {
         System.out.println(nums[0] + " removed");
       } else {
         int x, y, size, score;
-        float angle;
+        float angle; String cor;
         int n_players = Integer.parseInt(nums[0]);
         int n_creatures = Integer.parseInt(nums[1]);
         
+        // Players cycle
         for (int i = 0; i < n_players; i++ ) {
           line = read.readLine();
           nums = line.split(" ");
@@ -77,14 +78,31 @@ public class Player {
           size = (int) (height * Float.parseFloat(nums[4])); 
           score = Integer.parseInt(nums[5]); 
           
-          if (!players.containsKey(nums[0])) {
-            playerslock.lock();
-            players.put(nums[0], new Player(nums[0]));
-            playerslock.unlock();
-          } 
           playerslock.lock();
+          if (!players.containsKey(nums[0])) {
+            players.put(nums[0], new Player(nums[0]));
+          } 
           players.get(nums[0]).changeState(x, y, angle, size, score);
           playerslock.unlock();
+        }
+        
+        // Creatures cycle
+        for (int i=0; i<n_creatures; ++i) {
+          line = read.readLine();
+          nums = line.split(" ");
+          
+          cor = nums[1];
+          x = (int) (height * Double.parseDouble(nums[2]));
+          y = (int) (height * Double.parseDouble(nums[3])); 
+          size = (int) (height * Float.parseFloat(nums[4]));
+          
+          creatureslock.lock();
+          if (!creatures.containsKey(nums[0])) {
+            creatures.put(nums[0], new Creature(cor, x, y, size));
+          } else {
+            creatures.get(nums[0]).changeState(x, y, size);
+          }
+          creatureslock.unlock();
         }
       }
     } catch (Exception e) { System.out.println(e); }

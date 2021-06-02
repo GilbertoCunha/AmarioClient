@@ -6,6 +6,8 @@ int x_pos, y_pos;
 int size = width/4;
 int player_color = color(0);
 HashMap<Integer,Boolean> keys;
+HashMap<String,Creature> creatures;
+Lock creatureslock;
 Thread receiver;
 Iterator hm_iterator;
 
@@ -13,6 +15,9 @@ void setupGame(){
   keys = new HashMap<Integer,Boolean>();
   receiver = new Thread(new Receiver());
   receiver.start();
+  
+  creatureslock = new ReentrantLock();
+  creatures = new HashMap<String,Creature>();
 }
 
 
@@ -49,5 +54,11 @@ void drawGameScreen () {
     Map.Entry me = (Map.Entry) hm_iterator.next();
     Player p = (Player) me.getValue();
     p.draw();
+  }
+  hm_iterator = creatures.entrySet().iterator();
+  while(hm_iterator.hasNext()) {
+    Map.Entry me = (Map.Entry) hm_iterator.next();
+    Creature c = (Creature) me.getValue();
+    c.draw();
   }
 }
