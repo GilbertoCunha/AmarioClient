@@ -65,7 +65,7 @@ public class Player {
         line = read.readLine();
         nums = line.split(" ");
         
-        x = (int) (width * Double.parseDouble(nums[1]));
+        x = (int) (height * Double.parseDouble(nums[1]));
         y = (int) (height * Double.parseDouble(nums[2])); 
         angle = Float.parseFloat(nums[3]);
         size = (int) (height * Float.parseFloat(nums[4])); 
