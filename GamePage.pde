@@ -50,6 +50,4 @@ void drawGameScreen () {
     Player p = (Player) me.getValue();
     p.draw();
   }
-  
-  
 }

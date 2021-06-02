@@ -62,7 +62,7 @@ String LogoutResponse (String response) {
 
 void LogoutPressed () {
   // Connect with the server
-  localuser.connect("localhost", 23);
+  localuser.connect("192.168.1.80", 80);
   response = localuser.request(":logout " + localuser.username + " " + localuser.password);
   response = LogoutResponse (response);
   localuser.close();
@@ -87,7 +87,7 @@ String PlayResponse (String response) {
 
 void PlayPressed () {
   // Connect with the server
-  player.connect("localhost", 24);
+  player.connect("192.168.1.80", 81);
   response = player.request(":check " + localuser.username + " " + localuser.password);
   response = PlayResponse (response);
   

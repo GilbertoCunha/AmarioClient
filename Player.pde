@@ -56,31 +56,36 @@ public class Player {
       String line = read.readLine();
       String[] nums = line.split(" ");
       
-      int x, y, size, score;
-      float angle;
-      int n_players = Integer.parseInt(nums[0]);
-      int n_creatures = Integer.parseInt(nums[1]);
-      
-      for (int i = 0; i < n_players; i++ ) {
-        line = read.readLine();
-        nums = line.split(" ");
-        
-        x = (int) (height * Double.parseDouble(nums[1]));
-        y = (int) (height * Double.parseDouble(nums[2])); 
-        angle = Float.parseFloat(nums[3]);
-        size = (int) (height * Float.parseFloat(nums[4])); 
-        score = Integer.parseInt(nums[5]); 
-        
-        if (!players.containsKey(nums[0])) {
-          playerslock.lock();
-          players.put(nums[0], new Player(nums[0]));
-          playerslock.unlock();
-        } 
+      if (nums[1].equals("left")) {
         playerslock.lock();
-        players.get(nums[0]).changeState(x, y, angle, size, score);
+        players.remove(nums[1]);
         playerslock.unlock();
+      } else {
+        int x, y, size, score;
+        float angle;
+        int n_players = Integer.parseInt(nums[0]);
+        int n_creatures = Integer.parseInt(nums[1]);
+        
+        for (int i = 0; i < n_players; i++ ) {
+          line = read.readLine();
+          nums = line.split(" ");
+          
+          x = (int) (height * Double.parseDouble(nums[1]));
+          y = (int) (height * Double.parseDouble(nums[2])); 
+          angle = Float.parseFloat(nums[3]);
+          size = (int) (height * Float.parseFloat(nums[4])); 
+          score = Integer.parseInt(nums[5]); 
+          
+          if (!players.containsKey(nums[0])) {
+            playerslock.lock();
+            players.put(nums[0], new Player(nums[0]));
+            playerslock.unlock();
+          } 
+          playerslock.lock();
+          players.get(nums[0]).changeState(x, y, angle, size, score);
+          playerslock.unlock();
+        }
       }
-    
     } catch (Exception e) { System.out.println(e); }
   }
   
