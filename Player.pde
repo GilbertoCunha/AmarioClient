@@ -61,6 +61,11 @@ public class Player {
         players.remove(nums[0]);
         playerslock.unlock();
         System.out.println(nums[0] + " removed");
+      } else if (nums[1].equals("died")) {
+        creatureslock.lock();
+        creatures.remove(nums[0]);
+        creatureslock.unlock();
+        System.out.println(nums[0] + " died");
       } else {
         int x, y, size, score;
         float angle; String cor;
