@@ -53,6 +53,7 @@ public class Player {
   
   public void receive () {
     try {
+      double start = System.nanoTime();
       String line = read.readLine();
       String[] nums = line.split(" ");
       
@@ -109,6 +110,8 @@ public class Player {
           }
           creatureslock.unlock();
         }
+        start = 1000000000 / (System.nanoTime() - start);
+        //System.out.println("Receive FPS: " + start);
       }
     } catch (Exception e) { System.out.println(e); }
   }
