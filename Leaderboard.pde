@@ -17,7 +17,7 @@ void LeaderboardResponse(String response) {
 
 
 void getLeaderboard() {
-  localuser.connect("localhost",23);
+  localuser.connect("localhost", 80);
   response = localuser.request(":leaderboard 10" );
   LeaderboardResponse (response);
   localuser.close();

@@ -51,7 +51,7 @@ void LoginPressed () {
   localuser = new User(Username.Text, Password.Text);
   
   // Connect with the server
-  localuser.connect("192.168.1.80", 80);
+  localuser.connect("localhost", 80);
   response = localuser.request(":login " + Username.Text + " " + Password.Text);
   response = LoginResponse (response);
   localuser.close();
@@ -65,7 +65,7 @@ void CreateAccountPressed () {
   localuser = new User();
   
   // Connect with the server
-  localuser.connect("192.168.1.80", 80);
+  localuser.connect("localhost", 80);
   response = localuser.request(":create_account " + Username.Text + " " + Password.Text);
   response = CreateAccountResponse (response);
   localuser.close();
