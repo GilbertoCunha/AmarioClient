@@ -74,7 +74,7 @@ void drawGameScreen () {
   while(hm_iterator.hasNext()) {
     Map.Entry me = (Map.Entry) hm_iterator.next();
     Player p = (Player) me.getValue();
-    p.drawstatus(i);
+    p.drawstatus(i++);
   }
   playerslock.unlock();
   
