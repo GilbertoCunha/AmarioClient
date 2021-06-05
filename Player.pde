@@ -5,14 +5,17 @@ import java.util.concurrent.locks.ReentrantLock;
 
 class State {
   int x, y, size, score;
-  float angle;
+  float angle, fuelW, fuelA, fuelD;
   
-  State (int x, int y, float angle, int size, int score) {
+  State (int x, int y, float angle, int size, int score, float fuelW, float fuelA, float fuelD) {
     this.x = x;
     this.y = y;
     this.angle = angle;
     this.size = size;
     this.score = score;
+    this.fuelW = fuelW;
+    this.fuelA = fuelA;
+    this.fuelD = fuelD;
   }
 }
 
@@ -71,7 +74,7 @@ public class Player {
         System.out.println(nums[0] + " died");
       } else {
         int x, y, size, score;
-        float angle; String cor;
+        float angle, fuelW, fuelA, fuelD; String cor;
         int n_players = Integer.parseInt(nums[0]);
         int n_creatures = Integer.parseInt(nums[1]);
         
@@ -85,12 +88,15 @@ public class Player {
           angle = Float.parseFloat(nums[3]);
           size = (int) (height * Float.parseFloat(nums[4])); 
           score = Integer.parseInt(nums[5]); 
+          fuelW = Float.parseFloat(nums[6]);
+          fuelA = Float.parseFloat(nums[7]);
+          fuelD = Float.parseFloat(nums[8]);
           
           playerslock.lock();
           if (!players.containsKey(nums[0])) {
             players.put(nums[0], new Player(nums[0]));
           } 
-          players.get(nums[0]).changeState(x, y, angle, size, score);
+          players.get(nums[0]).changeState(x, y, angle, size, score, fuelW, fuelA, fuelD);
           playerslock.unlock();
         }
         
@@ -139,9 +145,9 @@ public class Player {
     } catch (Exception e) { System.out.println(e); }
   }
   
-  public void changeState(int x, int y, float angle, int size, int score) {
+  public void changeState(int x, int y, float angle, int size, int score, float fuelW, float fuelA, float fuelD) {
     this.lock.lock();
-    this.state = new State(x, y, angle, size, score);
+    this.state = new State(x, y, angle, size, score, fuelW, fuelA, fuelD);
     this.lock.unlock();  
   }
   
@@ -162,6 +168,12 @@ public class Player {
     textAlign(LEFT);
     textSize(height/40);
     text("Fuel:",3*width/4+textWidth("a"),height/30 + number*height/9 + 6.5*textWidth("a"));
+    textAlign(RIGHT);
+    textSize(height/40);
+    int fuelW = (int) state.fuelW;
+    int fuelA = (int) state.fuelA;
+    int fuelD = (int) state.fuelD;
+    text(fuelW + " " + fuelA + " " + fuelD,3*width/4+width/4.5-textWidth("a"),height/30 + number*height/9 + 6.5*textWidth("a"));
     lock.unlock();
   }
   
