@@ -20,7 +20,6 @@ void setupGame(){
   creatures = new HashMap<String,Creature>();
 }
 
-
 void playerkeyPressed () {
   String keypressed = "";
   if (!keys.containsKey(keyCode)) {
@@ -49,16 +48,34 @@ void playerkeyReleased () {
 
 void drawGameScreen () {
   background(255);
-  hm_iterator = players.entrySet().iterator();
-  while(hm_iterator.hasNext()) {
-    Map.Entry me = (Map.Entry) hm_iterator.next();
-    Player p = (Player) me.getValue();
-    p.draw();
-  }
+  
+  // Draw creatures
+  creatureslock.lock();
   hm_iterator = creatures.entrySet().iterator();
   while(hm_iterator.hasNext()) {
     Map.Entry me = (Map.Entry) hm_iterator.next();
     Creature c = (Creature) me.getValue();
     c.draw();
   }
+  creatureslock.unlock();
+  
+  // Draw players
+  playerslock.lock();
+  hm_iterator = players.entrySet().iterator();
+  while(hm_iterator.hasNext()) {
+    Map.Entry me = (Map.Entry) hm_iterator.next();
+    Player p = (Player) me.getValue();
+    p.draw();
+  }
+  
+  // Draw player status bars
+  int i = 0;
+  hm_iterator = players.entrySet().iterator();
+  while(hm_iterator.hasNext()) {
+    Map.Entry me = (Map.Entry) hm_iterator.next();
+    Player p = (Player) me.getValue();
+    p.drawstatus(i);
+  }
+  playerslock.unlock();
+  
 }

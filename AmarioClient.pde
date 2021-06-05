@@ -2,7 +2,7 @@ int gameScreen = 0;
 int FPS = 120;
 
 void setup () {
-  fullScreen ();
+  size(1280,720);
   frameRate(FPS);
   initSetup ();
   // initMenuSetup();
