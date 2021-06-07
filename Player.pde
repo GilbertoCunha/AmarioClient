@@ -153,27 +153,29 @@ public class Player {
   
   public void drawstatus(int number) {
     lock.lock();
-    fill(160,160,160,20);
-    rect(3*width/4, height/30 + number*height/9, width/4.5, height/10, height/100);
-    fill(0);
-    textAlign(LEFT);
-    textSize(height/36);
-    text(playername,3*width/4+textWidth("a"),height/30 + number*height/9 + 2*textWidth("a"));
-    textAlign(LEFT);
-    textSize(height/40);
-    text("Score: " + state.score,3*width/4+textWidth("a"),height/30 + number*height/9 + 4.5*textWidth("a"));
-    textAlign(RIGHT);
-    textSize(height/40);
-    text("Size: " + state.size,3*width/4+width/4.5-textWidth("a"),height/30 + number*height/9 + 4.25*textWidth("a"));
-    textAlign(LEFT);
-    textSize(height/40);
-    text("Fuel:",3*width/4+textWidth("a"),height/30 + number*height/9 + 6.5*textWidth("a"));
-    textAlign(RIGHT);
-    textSize(height/40);
-    int fuelW = (int) state.fuelW;
-    int fuelA = (int) state.fuelA;
-    int fuelD = (int) state.fuelD;
-    text(fuelW + " " + fuelA + " " + fuelD,3*width/4+width/4.5-textWidth("a"),height/30 + number*height/9 + 6.5*textWidth("a"));
+    if (state != null) {
+      fill(160,160,160,20);
+      rect(3*width/4, height/30 + number*height/9, width/4.5, height/10, height/100);
+      fill(0);
+      textAlign(LEFT);
+      textSize(height/36);
+      text(playername,3*width/4+textWidth("a"),height/30 + number*height/9 + 2*textWidth("a"));
+      textAlign(LEFT);
+      textSize(height/40);
+      text("Score: " + state.score, 3*width/4+textWidth("a"),height/30 + number*height/9 + 4.5*textWidth("a"));
+      textAlign(RIGHT);
+      textSize(height/40);
+      text("Size: " + state.size,3*width/4+width/4.5-textWidth("a"),height/30 + number*height/9 + 4.25*textWidth("a"));
+      textAlign(LEFT);
+      textSize(height/40);
+      text("Fuel:",3*width/4+textWidth("a"),height/30 + number*height/9 + 6.5*textWidth("a"));
+      textAlign(RIGHT);
+      textSize(height/40);
+      int fuelW = (int) state.fuelW;
+      int fuelA = (int) state.fuelA;
+      int fuelD = (int) state.fuelD;
+      text(fuelW + " " + fuelA + " " + fuelD,3*width/4+width/4.5-textWidth("a"),height/30 + number*height/9 + 6.5*textWidth("a"));
+    }
     lock.unlock();
   }
   
