@@ -72,6 +72,19 @@ public class Player {
         creatures.remove(nums[0]);
         creatureslock.unlock();
         System.out.println(nums[0] + " died");
+      } else if (nums[0].equals("obstacles")) {
+        int num_obstacles = Integer.parseInt(nums[1]);
+        int x, y, size;
+        obstacleslock.lock();
+        obstacles = new Obstacle[num_obstacles];
+        for (int i=0; i<num_obstacles; ++i) {
+          nums = read.readLine().split(" ");
+          x = (int) (height * Double.parseDouble(nums[0]));
+          y = (int) (height * Double.parseDouble(nums[1]));
+          size = (int) (height * Double.parseDouble(nums[2]));
+          obstacles[i] = new Obstacle(x, y, size);
+        }
+        obstacleslock.unlock();
       } else {
         int x, y, size, score;
         float angle, fuelW, fuelA, fuelD; String cor;

@@ -49,6 +49,13 @@ void playerkeyReleased () {
 void drawGameScreen () {
   background(255);
   
+  // Draw obstacles
+  obstacleslock.lock();
+  if (obstacles != null)
+    for (Obstacle o: obstacles)
+      o.draw();
+  obstacleslock.unlock();
+  
   // Draw creatures
   creatureslock.lock();
   hm_iterator = creatures.entrySet().iterator();
@@ -77,5 +84,6 @@ void drawGameScreen () {
     p.drawstatus(i++);
   }
   playerslock.unlock();
+ 
   
 }

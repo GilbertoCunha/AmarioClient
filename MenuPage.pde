@@ -9,7 +9,8 @@ PImage img;
 HashMap<String,Player> players;
 Lock playerslock;
 Player player;
-
+Obstacle[] obstacles;
+Lock obstacleslock;
 
 void initMenuSetup() {
   
@@ -36,6 +37,8 @@ void initMenuSetup() {
   playerslock.lock();
   player = players.get(localuser.username);
   playerslock.unlock();
+  
+  obstacleslock = new ReentrantLock();
   
   img  = loadImage("bobpicanha.png");
   
@@ -76,7 +79,7 @@ String PlayResponse (String response) {
   System.out.println("Response: \"" + response + "\"");
   if (response.equals("game full")) r = "Game is full";
   else if (response.equals("wrong authentication")) r = "Username or password incorrect";
-  else if (response.equals("user added")) {
+  else {
     r = "Entered game";
     gameScreen = 2;
     setupGame();
