@@ -5,6 +5,7 @@ Button Play;
 Button Leaderboard;
 Button Instructions;
 Button Logout;
+Button DeleteAccount;
 PImage img;
 HashMap<String,Player> players;
 Lock playerslock;
@@ -14,21 +15,25 @@ Lock obstacleslock;
 
 void initMenuSetup() {
   
-  Play = new Button (width / 4 + width/20, 2 * height / 5, width/3, width/10);
+  Play = new Button ( width / 2, 1 * height / 6, width/2, width/12);
   Play.setup (base, highlight, pressed, "Play", true);
   Play.textSize = menuTextSize;
   
-  Leaderboard = new Button (3 * width / 4 - width/20, 2 * height / 5, width/3, width/10);
+  Leaderboard = new Button ( width / 2, 2 * height / 6, width/2, width/12);
   Leaderboard.setup (base, highlight, pressed, "Leaderboard", true);
   Leaderboard.textSize = menuTextSize;
   
-  Instructions = new Button ( width / 2, 3 * height / 5, width/2, width/10);
+  Instructions = new Button ( width / 2, 3 * height / 6, width/2, width/12);
   Instructions.setup (base, highlight, pressed, "Instructions", true);
   Instructions.textSize = menuTextSize;
   
-  Logout = new Button ( width - 2 * width/15, height - 2 * width/28, width/5, width/14);
+  Logout = new Button ( width / 2, 5 * height / 6, width/2, width/12);
   Logout.setup (base, highlight, pressed, "Logout", true); 
   Logout.textSize = menuTextSize;
+  
+  DeleteAccount = new Button ( width / 2, 4 * height / 6, width/2, width/12);
+  DeleteAccount.setup (base, highlight, pressed, "Delete Account", true); 
+  DeleteAccount.textSize = menuTextSize;
   
   playerslock = new ReentrantLock();
   players = new HashMap<String,Player>();
@@ -49,6 +54,7 @@ void MenuMousePressed () {
   Leaderboard.buttonMousePressed();
   Instructions.buttonMousePressed();
   Logout.buttonMousePressed();
+  DeleteAccount.buttonMousePressed();
 }
 
 String LogoutResponse (String response) {
@@ -72,6 +78,30 @@ void LogoutPressed () {
   
   // Show the authentication result
   Logout.reset();
+}
+
+String DeleteAccountResponse (String response) {
+  String r = "";
+  System.out.println("Deletion Response: \"" + response + "\"");
+  if (response.equals("user_not_found")) r = "User not found";
+  else if (response.equals("wrong_authentication")) r = "Username or password incorrect";
+  else if (response.equals("ok")) {
+    System.out.println("Deleted");
+    r = "Account Deleted";
+    gameScreen = 0;
+  }
+  return r;
+}
+
+void DeleteAccountPressed () {
+  // Connect with the server
+  localuser.connect("localhost", 80);
+  response = localuser.request(":close_account " + localuser.username + " " + localuser.password);
+  response = DeleteAccountResponse (response);
+  localuser.close();
+  
+  // Show the authentication result
+  DeleteAccount.reset();
 }
 
 String PlayResponse (String response) {
@@ -105,6 +135,7 @@ void drawMenuScreen () {
   Leaderboard.draw();
   Instructions.draw();
   Logout.draw();
+  DeleteAccount.draw();
   if (Instructions.isPressed()) {
     gameScreen = 3;
     Instructions.reset();
@@ -116,4 +147,5 @@ void drawMenuScreen () {
     getLeaderboard();
   }
   else if (Play.isPressed()) PlayPressed();
+  else if (DeleteAccount.isPressed()) DeleteAccountPressed();
 }
