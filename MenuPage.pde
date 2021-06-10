@@ -37,10 +37,9 @@ void initMenuSetup() {
   
   playerslock = new ReentrantLock();
   players = new HashMap<String,Player>();
-  players.put(localuser.username,new Player(localuser.username));
   
   playerslock.lock();
-  player = players.get(localuser.username);
+  player = new Player(localuser.username);
   playerslock.unlock();
   
   obstacleslock = new ReentrantLock();
@@ -119,6 +118,9 @@ String PlayResponse (String response) {
 }
 
 void PlayPressed () {
+  // Put localplayer in player list
+  players.put(localuser.username,new Player(localuser.username));
+  
   // Connect with the server
   player.connect("localhost", 81);
   response = player.request(":check " + localuser.username + " " + localuser.password);

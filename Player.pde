@@ -56,16 +56,18 @@ public class Player {
     } catch (Exception e) { System.out.println(e); }    
   }
   
-  public void receive () {
+  public int receive () {
+    int r = 0;
     try {
       double start = System.nanoTime();
       String line = read.readLine();
       String[] nums = line.split(" ");
       
-      if (nums[1].equals("left")) {
+      if (nums[1].equals("left") || nums[1].equals("lost")) {
         playerslock.lock();
         players.remove(nums[0]);
         playerslock.unlock();
+        if (nums[0].equals(this.playername)) r = 1;
         System.out.println(nums[0] + " removed");
       } else if (nums[1].equals("died")) {
         creatureslock.lock();
@@ -134,7 +136,11 @@ public class Player {
         start = 1000000000 / (System.nanoTime() - start);
         //System.out.println("Receive FPS: " + start);
       }
-    } catch (Exception e) { System.out.println(e); }
+      return r;
+    } catch (Exception e) { 
+      System.out.println(e); 
+      return r;
+    } 
   }
   
   public void send (String command) {

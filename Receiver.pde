@@ -1,13 +1,12 @@
 class Receiver implements Runnable {
-  boolean exit = false;
+  int exit = 0;
   
   public void run() {
-    while(!exit) {
-      player.receive();
+    while(exit == 0) {
+      exit = player.receive();
     }
-  }
-  
-  public void stop() {
-    exit = true;
+    player.close();
+    players.clear();
+    gameScreen = 1;
   }
 }
