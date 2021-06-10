@@ -190,10 +190,44 @@ public class Player {
       text("Fuel:",3*width/4+textWidth("a"),height/30 + number*height/9 + 6.5*textWidth("a"));
       textAlign(RIGHT);
       textSize(height/40);
-      int fuelW = (int) state.fuelW;
-      int fuelA = (int) state.fuelA;
-      int fuelD = (int) state.fuelD;
-      text(fuelW + " " + fuelA + " " + fuelD,3*width/4+width/4.5-textWidth("a"),height/30 + number*height/9 + 6.5*textWidth("a"));
+      float fuelW = (float) state.fuelW;
+      float fuelA = (float) state.fuelA;
+      float fuelD = (float) state.fuelD;
+      text(Math.round(fuelW * 10.0) / 10.0 + " " + Math.round(fuelA * 10.0) / 10.0 + " " + Math.round(fuelD * 10.0) / 10.0,3*width/4+width/4.5-textWidth("a"),height/30 + number*height/9 + 6.5*textWidth("a"));
+      //nível alto de combustível: verde
+      if(fuelW > 0.6){
+        fill(0, 255, 0);
+      }
+      //nível médio de combustível: amarelo
+      else if(fuelW > 0.3){
+        fill(255, 255, 0);
+      }
+      //nível baixo de combustível: vermelho
+      else if(fuelW < 0.3){
+        fill(255, 0, 0);
+      }
+      rect(3*width/4+5.5*textWidth("a"),height/30 + number*height/9 + 4.9*textWidth("a"), 110.0*fuelW, 3.75);
+      if(fuelA > 0.6){
+        fill(0, 255, 0);
+      }
+      else if(fuelA > 0.3){
+        fill(255, 255, 0); 
+      }
+      else if(fuelA < 0.3){
+        fill(255, 0, 0);
+      }
+      rect(3*width/4+5.5*textWidth("a"),height/30 + number*height/9 + 5.7*textWidth("a"), 110.0*fuelA, 3.75);
+      if(fuelD > 0.6){
+        fill(0, 255, 0);
+      }
+      else if(fuelD > 0.3){
+        fill(255, 255, 0);  
+      }
+      else if(fuelD < 0.3){
+        fill(255, 0, 0);
+      }
+      rect(3*width/4+5.5*textWidth("a"),height/30 + number*height/9 + 6.5*textWidth("a"), 110.0*fuelD, 3.75);
+      
     }
     lock.unlock();
   }
