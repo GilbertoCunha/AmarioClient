@@ -94,6 +94,7 @@ String LoginResponse (String response) {
   System.out.println("Login Response: \"" + response + "\"");
   if (response.equals("user_not_found")) r = "User not found";
   else if (response.equals("wrong_authentication")) r = "Username or password incorrect";
+  else if (response.equals("user_already_logged")) r = "User already logged in";
   else if (response.equals("ok")) {
     r = "Logged In";
     gameScreen = 1;
