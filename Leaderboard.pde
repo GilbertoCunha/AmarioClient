@@ -4,17 +4,33 @@ Button lbBack;
 
 void LeaderboardResponse(String response) {
   String[] userdata = response.split(",", 0);
-  int i = 0;
-  for (String s: userdata) i++;
+  int N = 0;
+  for (String s: userdata) N++;
   
-  lb = new String [i][2];
-  i = 0;
+  lb = new String [N][2];
+  int i = 0;
   for (String s: userdata){
     lb[i++] = s.split(" ", 0);
     System.out.println("User: " + lb[i-1][0] + " | Score: " + lb[i-1][1]);
   }
+  sortLeaderboard(lb, N);
 }
 
+void sortLeaderboard (String[][] s, int N) {
+    String name, score;
+    for(int i = 0; i < N ; i++ ){
+        for(int j = 1; j < N - i; j++) {
+            if (Integer.parseInt(s[j-1][1]) < Integer.parseInt(s[j][1])) {
+                name = s[j-1][0];
+                score = s[j-1][1];
+                s[j-1][0] = s[j][0];
+                s[j-1][1] = s[j][1];
+                s[j][0] = name;
+                s[j][1] = score;
+            }
+        }
+    }
+}
 
 void getLeaderboard() {
   localuser.connect("localhost", 80);

@@ -10,14 +10,21 @@ HashMap<String,Creature> creatures;
 Lock creatureslock;
 Thread receiver;
 Iterator hm_iterator;
+Button Quit;
+Receiver runnable;
 
 void setupGame(){
   keys = new HashMap<Integer,Boolean>();
-  receiver = new Thread(new Receiver());
+  runnable = new Receiver();
+  receiver = new Thread(runnable);
   receiver.start();
   
   creatureslock = new ReentrantLock();
   creatures = new HashMap<String,Creature>();
+  
+  Quit = new Button ( width / 20, height / 20, height / 8, height/14);
+  Quit.setup (base, highlight, pressed, "Quit", true); 
+  Quit.textSize = (int) menuTextSize / 2;
 }
 
 void playerkeyPressed () {
@@ -46,9 +53,14 @@ void playerkeyReleased () {
   }
 }
 
+void GameMousePressed () {
+  Quit.buttonMousePressed();
+}
+
 void drawGameScreen () {
   background(255);
-  
+  Quit.draw();
+  strokeWeight(20);
   // Draw obstacles
   obstacleslock.lock();
   if (obstacles != null)
@@ -84,6 +96,12 @@ void drawGameScreen () {
     p.drawstatus(i++);
   }
   playerslock.unlock();
- 
-  
+
+  try {
+    // If exit is pressed
+    if (Quit.isPressed()) {
+      runnable.terminate();
+      receiver.join();
+    }
+  } catch (Exception e) { System.out.println(e); }
 }

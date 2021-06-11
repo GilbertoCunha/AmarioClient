@@ -1,5 +1,8 @@
 int gameScreen = 0;
 int FPS = 120;
+String ip = "localhost";
+int gamePort = 81;
+int loginPort = 80;
 
 void setup () {
   size(1280,720);
@@ -27,6 +30,7 @@ void draw () {
 void mousePressed () {
   if (gameScreen == 0) initMousePressed ();
   else if (gameScreen == 1) MenuMousePressed ();
+  else if (gameScreen == 2) GameMousePressed ();
   else if (gameScreen == 3) InstructionsMousePressed ();
   else if (gameScreen == 4) LbMousePressed ();
 }
