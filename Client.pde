@@ -38,13 +38,7 @@ public class User {
   public String request (String command) {
     try {
       out.println(command);
-      //String line = " ";
-      // while(line!=null) {
-      //  line = read.readLine();
-      //  System.out.println(line);
-      //}
       String line = read.readLine();
-      // if (line != null) System.out.println(line);
       return line;
     } catch (Exception e) { System.out.println(e); return "Exception"; }
   }

@@ -11,7 +11,6 @@ void LeaderboardResponse(String response) {
   int i = 0;
   for (String s: userdata){
     lb[i++] = s.split(" ", 0);
-    System.out.println("User: " + lb[i-1][0] + " | Score: " + lb[i-1][1]);
   }
   sortLeaderboard(lb, N);
 }

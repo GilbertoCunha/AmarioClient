@@ -1,8 +1,6 @@
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-// fontItalic = createFont("Arial Italic", height/40);
-
 class State {
   int x, y, size, score;
   float angle, fuelW, fuelA, fuelD;
@@ -59,7 +57,6 @@ public class Player {
   public int receive () {
     int r = 0;
     try {
-      double start = System.nanoTime();
       String line = read.readLine();
       String[] nums = line.split(" ");
       
@@ -68,12 +65,10 @@ public class Player {
         players.remove(nums[0]);
         playerslock.unlock();
         if (nums[0].equals(this.playername)) r = 1;
-        System.out.println(nums[0] + " removed");
       } else if (nums[1].equals("died")) {
         creatureslock.lock();
         creatures.remove(nums[0]);
         creatureslock.unlock();
-        System.out.println(nums[0] + " died");
       } else if (nums[0].equals("obstacles")) {
         int num_obstacles = Integer.parseInt(nums[1]);
         int x, y, size;
@@ -87,6 +82,10 @@ public class Player {
           obstacles[i] = new Obstacle(x, y, size);
         }
         obstacleslock.unlock();
+      } else if (nums[1].equals("added")) {
+        gameScreen = 2;
+      } else if (nums[1].equals("ahead")) {
+        players_ahead = Integer.parseInt(nums[0]);
       } else {
         int x, y, size, score;
         float angle, fuelW, fuelA, fuelD; String cor;
@@ -133,8 +132,6 @@ public class Player {
           }
           creatureslock.unlock();
         }
-        start = 1000000000 / (System.nanoTime() - start);
-        //System.out.println("Receive FPS: " + start);
       }
       return r;
     } catch (Exception e) { 

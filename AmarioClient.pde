@@ -15,16 +15,12 @@ void setup () {
 }
 
 void draw () {
-  double begin = System.nanoTime();
-  // if (frameRate < 50 && frameCount > 500) System.out.println("FPS: " + frameRate + " | Count: " + frameCount);
   if (gameScreen == 0) drawInitScreen ();
   else if (gameScreen == 1) drawMenuScreen ();
   else if (gameScreen == 2) drawGameScreen ();
   else if (gameScreen == 3) drawInstructions ();
   else if (gameScreen == 4) drawLeaderboard ();
-  begin = 1000000000 / (System.nanoTime() - begin);
-  // System.out.println("Draw FPS: " + begin);
-  // if (frameRate < 60 && gameScreen == 4) System.out.println("FrameRate: " + frameRate);
+  else if (gameScreen == 5) drawWaitingScreen();
 } 
 
 void mousePressed () {
@@ -33,6 +29,7 @@ void mousePressed () {
   else if (gameScreen == 2) GameMousePressed ();
   else if (gameScreen == 3) InstructionsMousePressed ();
   else if (gameScreen == 4) LbMousePressed ();
+  else if (gameScreen == 5) waitingScreenMousePressed ();
 }
 
 void keyPressed () {
@@ -45,7 +42,6 @@ void keyReleased () {
 }
 
 void exit () {
-  System.out.println("Executed");
   if (localuser != null) {
     localuser.connect("localhost", 80);
     response = localuser.request(":logout " + localuser.username + " " + localuser.password);

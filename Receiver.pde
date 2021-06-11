@@ -17,12 +17,11 @@ class Receiver implements Runnable {
     response = LoginResponse (response);
     localuser.close();
     
-    System.out.println("Re-login: " + response);
     gameScreen = 1;
+    exit = 0;
   }
   
   public void terminate () {
-    System.out.println("Terminated");
     exit = 1;
   }
 }

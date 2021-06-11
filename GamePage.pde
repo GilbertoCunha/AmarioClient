@@ -59,14 +59,16 @@ void GameMousePressed () {
 
 void drawGameScreen () {
   background(255);
-  Quit.draw();
-  strokeWeight(20);
+  
   // Draw obstacles
   obstacleslock.lock();
   if (obstacles != null)
     for (Obstacle o: obstacles)
       o.draw();
   obstacleslock.unlock();
+  
+  strokeWeight(20);
+  Quit.draw();
   
   // Draw creatures
   creatureslock.lock();

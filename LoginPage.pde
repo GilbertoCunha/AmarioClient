@@ -49,7 +49,6 @@ void initMousePressed () {
 
 void LoginPressed () {
   // Create user
-  System.out.println(Username.Text);
   localuser = new User(Username.Text, Password.Text);
   
   // Connect with the server
@@ -94,7 +93,6 @@ void drawInitScreen () {
 
 String LoginResponse (String response) {
   String r = "";
-  System.out.println("Login Response: \"" + response + "\"");
   if (response.equals("user_not_found")) r = "User not found";
   else if (response.equals("wrong_authentication")) r = "Username or password incorrect";
   else if (response.equals("user_already_logged")) r = "User already logged in";
@@ -110,7 +108,6 @@ String LoginResponse (String response) {
 
 String CreateAccountResponse (String response) {
   String r = "";
-  System.out.println("Create Account Response: \"" + response + "\"");
   if (response.equals("user_exists")) r = "User already in use";
   else if (response.equals("ok")) r = "Account successfully created";
   return r;

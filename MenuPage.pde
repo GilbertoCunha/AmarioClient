@@ -58,7 +58,6 @@ void MenuMousePressed () {
 
 String LogoutResponse (String response) {
   String r = "";
-  System.out.println("Login Response: \"" + response + "\"");
   if (response.equals("user_not_found")) r = "User not found";
   else if (response.equals("wrong_authentication")) r = "Username or password incorrect";
   else if (response.equals("ok")) {
@@ -81,7 +80,6 @@ void LogoutPressed () {
 
 String DeleteAccountResponse (String response) {
   String r = "";
-  System.out.println("Deletion Response: \"" + response + "\"");
   if (response.equals("user_not_found")) r = "User not found";
   else if (response.equals("wrong_authentication")) r = "Username or password incorrect";
   else if (response.equals("ok")) {
@@ -105,10 +103,13 @@ void DeleteAccountPressed () {
 
 String PlayResponse (String response) {
   String r = "";
-  System.out.println("Response: \"" + response + "\"");
   if (response.equals("game full")) r = "Game is full";
   else if (response.equals("wrong authentication")) r = "Username or password incorrect";
-  else {
+  else if (response.equals("added to queue")) {
+    r = "Entered Queue";
+    setupGame();
+    gameScreen = 5;
+  } else {
     r = "Entered game";
     gameScreen = 2;
     setupGame();
