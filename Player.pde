@@ -123,12 +123,13 @@ public class Player {
           x = (int) (height * Double.parseDouble(nums[2]));
           y = (int) (height * Double.parseDouble(nums[3])); 
           size = (int) (height * Float.parseFloat(nums[4]));
+          angle = Float.parseFloat(nums[5]);
           
           creatureslock.lock();
           if (!creatures.containsKey(nums[0])) {
-            creatures.put(nums[0], new Creature(cor, x, y, size));
+            creatures.put(nums[0], new Creature(cor, x, y, size, angle));
           } else {
-            creatures.get(nums[0]).changeState(x, y, size);
+            creatures.get(nums[0]).changeState(x, y, size, angle);
           }
           creatureslock.unlock();
         }
@@ -190,7 +191,6 @@ public class Player {
       float fuelW = (float) state.fuelW;
       float fuelA = (float) state.fuelA;
       float fuelD = (float) state.fuelD;
-      text(Math.round(fuelW * 10.0) / 10.0 + " " + Math.round(fuelA * 10.0) / 10.0 + " " + Math.round(fuelD * 10.0) / 10.0,3*width/4+width/4.5-textWidth("a"),height/30 + number*height/9 + 6.5*textWidth("a"));
       //nível alto de combustível: verde
       if(fuelW > 0.6){
         fill(0, 255, 0);
@@ -203,7 +203,7 @@ public class Player {
       else if(fuelW < 0.3){
         fill(255, 0, 0);
       }
-      rect(3*width/4+5.5*textWidth("a"),height/30 + number*height/9 + 4.9*textWidth("a"), 110.0*fuelW, 3.75);
+      rect(3*width/4+5.5*textWidth("a"),height/30 + number*height/9 + 4.9*textWidth("a"), height/3.5*fuelW, height/205);
       if(fuelA > 0.6){
         fill(0, 255, 0);
       }
@@ -213,7 +213,7 @@ public class Player {
       else if(fuelA < 0.3){
         fill(255, 0, 0);
       }
-      rect(3*width/4+5.5*textWidth("a"),height/30 + number*height/9 + 5.7*textWidth("a"), 110.0*fuelA, 3.75);
+      rect(3*width/4+5.5*textWidth("a"),height/30 + number*height/9 + 5.7*textWidth("a"), height/3.5*fuelA, height/205);
       if(fuelD > 0.6){
         fill(0, 255, 0);
       }
@@ -223,7 +223,7 @@ public class Player {
       else if(fuelD < 0.3){
         fill(255, 0, 0);
       }
-      rect(3*width/4+5.5*textWidth("a"),height/30 + number*height/9 + 6.5*textWidth("a"), 110.0*fuelD, 3.75);
+      rect(3*width/4+5.5*textWidth("a"),height/30 + number*height/9 + 6.5*textWidth("a"), height/3.5*fuelD, height/205);
       
     }
     lock.unlock();
