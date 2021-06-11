@@ -236,8 +236,13 @@ public class Player {
     lock.lock();
     if (this.state != null) {
       fill(200);
-      stroke(200);
-      strokeWeight(0);
+      if(this.playername == localuser.username){
+        strokeWeight(5);
+        stroke(0, 255, 0);
+      }
+      else if(this.playername != localuser.username){
+        noStroke();
+      }
       int size = 2 * state.size;
       ellipse(state.x, state.y, size, size);
       stroke(0);
