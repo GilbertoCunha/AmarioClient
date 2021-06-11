@@ -7,6 +7,14 @@ class Receiver implements Runnable {
     }
     player.close();
     players.clear();
+    
+    // Login again
+    localuser.connect("localhost", 80);
+    response = localuser.request(":login " + Username.Text + " " + Password.Text);
+    response = LoginResponse (response);
+    localuser.close();
+    
+    System.out.println("Re-login: " + response);
     gameScreen = 1;
   }
 }

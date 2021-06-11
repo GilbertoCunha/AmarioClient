@@ -13,6 +13,8 @@ Button Login;
 Button CreateAccount;
 
 void initSetup () {
+  localuser = null;
+  
   // Criar textbox para o username
   Username = new TEXTBOX();
   Username.X = width/2;
@@ -69,6 +71,7 @@ void CreateAccountPressed () {
   response = localuser.request(":create_account " + Username.Text + " " + Password.Text);
   response = CreateAccountResponse (response);
   localuser.close();
+  localuser = null;
   
   // Show the authentication result
   CreateAccount.reset();
