@@ -19,7 +19,7 @@ void sortLeaderboard (String[][] s, int N) {
     String name, score;
     for(int i = 0; i < N ; i++ ){
         for(int j = 1; j < N - i; j++) {
-            if (Integer.parseInt(s[j-1][1]) < Integer.parseInt(s[j][1])) {
+            if (Float.parseFloat(s[j-1][1]) < Float.parseFloat(s[j][1])) {
                 name = s[j-1][0];
                 score = s[j-1][1];
                 s[j-1][0] = s[j][0];
@@ -82,7 +82,8 @@ void drawLeaderboard() {
     textAlign(LEFT);
     textSize(textSize);
     fill(0);
-    text(userdata[1], width/2 + width/7 - width/8, height/8 + i*height/14 + textSize);
+    String score = String.valueOf((int) Float.parseFloat(userdata[1]));
+    text(score, width/2 + width/7 - width/8, height/8 + i*height/14 + textSize);
     i++;
   }
   

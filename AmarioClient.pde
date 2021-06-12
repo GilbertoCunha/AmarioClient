@@ -1,6 +1,6 @@
 int gameScreen = 0;
 int FPS = 120;
-String ip = "localhost";
+String ip = "192.168.1.80";
 int gamePort = 81;
 int loginPort = 80;
 
@@ -15,6 +15,7 @@ void setup () {
 }
 
 void draw () {
+  if (frameRate < 60) System.out.println(frameRate);
   if (gameScreen == 0) drawInitScreen ();
   else if (gameScreen == 1) drawMenuScreen ();
   else if (gameScreen == 2) drawGameScreen ();

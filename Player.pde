@@ -101,7 +101,7 @@ public class Player {
           y = (int) (height * Double.parseDouble(nums[2])); 
           angle = Float.parseFloat(nums[3]);
           size = (int) (height * Float.parseFloat(nums[4])); 
-          score = Integer.parseInt(nums[5]); 
+          score = (int) (Float.parseFloat(nums[5])); 
           fuelW = Float.parseFloat(nums[6]);
           fuelA = Float.parseFloat(nums[7]);
           fuelD = Float.parseFloat(nums[8]);
