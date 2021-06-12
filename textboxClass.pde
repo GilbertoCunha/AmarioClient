@@ -62,7 +62,7 @@ public class TEXTBOX {
       textAlign(LEFT);
       text(show, X + (textWidth("a") / 2), Y + TEXTSIZE); 
       textAlign(LEFT);
-      text(name, X + (textWidth("a") / 2) - 200, Y + TEXTSIZE);
+      text(name, X + (textWidth("a") / 2), Y - height/100);
    }
    
    // IF THE KEYCODE IS ENTER RETURN 1

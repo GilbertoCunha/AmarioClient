@@ -1,5 +1,5 @@
 String username, password, response = null; // Strings onde são guardados o username e a password
-TEXTBOX Username, Password;
+TEXTBOX Username, Password, IP;
 User localuser;
 boolean loginSuccessful = false;
 
@@ -11,40 +11,57 @@ color pressed = color (220, 220, 220);
 // Botões de login e criar conta
 Button Login;
 Button CreateAccount;
+Button ChangeIP;
 
 void initSetup () {
   localuser = null;
   
+  // Criar textbox para o IP
+  IP = new TEXTBOX();
+  IP.X = (int) (width/3.6);
+  IP.Y = height/2;
+  IP.name = "IP";
+  
   // Criar textbox para o username
   Username = new TEXTBOX();
-  Username.X = width/2;
-  Username.Y = height/2 - 50;
+  Username.X = width/50;
+  Username.Y = height/3;
   Username.name = "Username";
   
   // Criar textbox para a password
   Password = new TEXTBOX();
-  Password.X = width/2;
-  Password.Y = height/2 + 50;
+  Password.X = (int) (width/1.97);
+  Password.Y = height/3;
   Password.name = "Password";
   Password.showText = false;
   
-  // Criar os botões de login e de criar conta
-  Login = new Button (width / 3, 4 * height / 5, 400, 80);
+  // Criar os botões de login, de criar conta e mudar configuração
+  ChangeIP = new Button (width / 6, 4 * height / 5, (int) (height/1.8), (int) (height/10));
+  ChangeIP.setup (base, highlight, pressed, "Change IP", true);
+  Login = new Button (3*width / 6, 4 * height / 5, (int) (height/1.8), (int) (height/10));
   Login.setup (base, highlight, pressed, "Login", true);
-  CreateAccount = new Button (2 * width / 3, 4 * height / 5, 400, 80);
+  CreateAccount = new Button (5 * width / 6, 4 * height / 5, (int) (height/1.8), (int) (height/10));
   CreateAccount.setup (base, highlight, pressed, "Create Account", true);
+  
+  // Criar botão de sair do jogo
+  ExitGame = new Button (width / 10, height / 20, (int) (height / 3.5), height/14);
+  ExitGame.setup (base, highlight, pressed, "Exit Game", true);
 }
 
 void initKeyPressed () {
   Username.KEYPRESSED (key, keyCode);
   Password.KEYPRESSED (key, keyCode);
+  IP.KEYPRESSED (key, keyCode);
 }
 
 void initMousePressed () {
   Username.PRESSED (mouseX, mouseY);
   Password.PRESSED (mouseX, mouseY);
+  IP.PRESSED (mouseX, mouseY);
   Login.buttonMousePressed ();
   CreateAccount.buttonMousePressed ();
+  ExitGame.buttonMousePressed ();
+  ChangeIP.buttonMousePressed();
 }
 
 void LoginPressed () {
@@ -52,7 +69,7 @@ void LoginPressed () {
   localuser = new User(Username.Text, Password.Text);
   
   // Connect with the server
-  localuser.connect("localhost", 80);
+  localuser.connect(ip, loginPort);
   response = localuser.request(":login " + Username.Text + " " + Password.Text);
   response = LoginResponse (response);
   localuser.close();
@@ -66,7 +83,7 @@ void CreateAccountPressed () {
   localuser = new User();
   
   // Connect with the server
-  localuser.connect("localhost", 80);
+  localuser.connect(ip, loginPort);
   response = localuser.request(":create_account " + Username.Text + " " + Password.Text);
   response = CreateAccountResponse (response);
   localuser.close();
@@ -76,18 +93,29 @@ void CreateAccountPressed () {
   CreateAccount.reset();
 }
 
+void ChangeIPPressed () {
+  ip = IP.Text;
+  ChangeIP.reset();
+  response = "IP changed";
+}
+
 void drawInitScreen () {
   background(255);
   Username.DRAW();
   Password.DRAW();
+  IP.DRAW();
   Login.draw();
   CreateAccount.draw();
+  ChangeIP.draw();
+  ExitGame.draw();
   if (Login.isPressed()) LoginPressed ();
   else if (CreateAccount.isPressed()) CreateAccountPressed ();
+  else if (ExitGame.isPressed()) quit();
+  else if (ChangeIP.isPressed()) ChangeIPPressed();
   if (response != null) {
     textSize (20);
     textAlign(LEFT);
-    text (response, Login.posX, Login.posY + 100);
+    text (response, ChangeIP.posX, ChangeIP.posY + height/7);
   }
 }
 
@@ -102,6 +130,7 @@ String LoginResponse (String response) {
     initMenuSetup();
     Username.reset();
     Password.reset();
+    IP.reset();
   }
   return r;
 }

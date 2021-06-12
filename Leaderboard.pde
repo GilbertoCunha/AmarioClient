@@ -32,7 +32,7 @@ void sortLeaderboard (String[][] s, int N) {
 }
 
 void getLeaderboard() {
-  localuser.connect("localhost", 80);
+  localuser.connect(ip, loginPort);
   response = localuser.request(":leaderboard 10" );
   LeaderboardResponse (response);
   localuser.close();

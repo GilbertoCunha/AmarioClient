@@ -41,11 +41,12 @@ void keyReleased () {
   if (gameScreen == 2) playerkeyReleased ();
 }
 
-void exit () {
+void quit () {
   if (localuser != null) {
-    localuser.connect("localhost", 80);
+    localuser.connect(ip, loginPort);
     response = localuser.request(":logout " + localuser.username + " " + localuser.password);
     response = LogoutResponse (response);
     localuser.close();
   }
+  exit();
 }

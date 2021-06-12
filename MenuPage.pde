@@ -6,6 +6,7 @@ Button Leaderboard;
 Button Instructions;
 Button Logout;
 Button DeleteAccount;
+Button ExitGame;
 PImage img;
 HashMap<String,Player> players;
 Lock playerslock;
@@ -69,7 +70,7 @@ String LogoutResponse (String response) {
 
 void LogoutPressed () {
   // Connect with the server
-  localuser.connect("localhost", 80);
+  localuser.connect(ip, loginPort);
   response = localuser.request(":logout " + localuser.username + " " + localuser.password);
   response = LogoutResponse (response);
   localuser.close();
@@ -92,7 +93,7 @@ String DeleteAccountResponse (String response) {
 
 void DeleteAccountPressed () {
   // Connect with the server
-  localuser.connect("localhost", 80);
+  localuser.connect(ip, loginPort);
   response = localuser.request(":close_account " + localuser.username + " " + localuser.password);
   response = DeleteAccountResponse (response);
   localuser.close();
@@ -123,7 +124,7 @@ void PlayPressed () {
   players.put(localuser.username,new Player(localuser.username));
   
   // Connect with the server
-  player.connect("localhost", 81);
+  player.connect(ip, gamePort);
   response = player.request(":check " + localuser.username + " " + localuser.password);
   response = PlayResponse (response);
   

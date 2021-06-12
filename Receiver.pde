@@ -12,7 +12,7 @@ class Receiver implements Runnable {
     creatures.clear();
     
     // Login again
-    localuser.connect("localhost", 80);
+    localuser.connect(ip, loginPort);
     response = localuser.request(":login " + localuser.username + " " + localuser.password);
     response = LoginResponse (response);
     localuser.close();
