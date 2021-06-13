@@ -22,8 +22,8 @@ void drawArrow(int cx, int cy, int len, float angle){
   translate(cx, cy);
   rotate(angle);
   // line(0,0,len, 0);
-  line(len, 0, len - 8, -8);
-  line(len, 0, len - 8, 8);
+  line(1.25*len, 0, 3*len/4, -3*len/4);
+  line(1.25*len, 0, 3*len/4, 3*len/4);
   popMatrix();
 }
 
@@ -120,7 +120,6 @@ public class Player {
             for (j = 0; j<3 && !avatar_free[j]; ++j);
             player_image = player_avatars[j];
             Player novo = new Player(nums[0], player_image);
-            novo.img.resize(minSize, minSize);
             players.put(nums[0], novo);
             avatar_free[j] = false;
           } 
@@ -232,9 +231,10 @@ public class Player {
     lock.lock();
     if (this.state != null) {
       image(this.img, state.x - state.size, state.y - state.size, 2*state.size, 2*state.size);
-      stroke(0);
-      strokeWeight(2);
+      stroke(240,215,8);
+      strokeWeight(height/300);
       drawArrow(state.x, state.y, state.size, state.angle);
+      stroke(0);
     }
     lock.unlock();  
   }

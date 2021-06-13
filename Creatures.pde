@@ -31,7 +31,7 @@ class Creature {
     int size = 2 * this.size;
     ellipse(x, y, size, size);
     stroke(0);
-    strokeWeight(2);
+    strokeWeight(height/300);
     drawArrow(x, y, size/2, angle);
     lock.unlock();  
   }

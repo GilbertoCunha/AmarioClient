@@ -2,6 +2,7 @@ String[][] lb;
 int textSize = (int) (height/18);
 // int textSize = 40;
 Button lbBack;
+PImage usercloud, scorecloud, leaderboard;
 
 void LeaderboardResponse(String response) {
   String[] userdata = response.split(",", 0);
@@ -34,13 +35,16 @@ void sortLeaderboard (String[][] s, int N) {
 
 void getLeaderboard() {
   localuser.connect(ip, loginPort);
-  response = localuser.request(":leaderboard 8" );
+  response = localuser.request(":leaderboard 7" );
   LeaderboardResponse (response);
   localuser.close();
 }
 
 void setupLeaderboard() {
   lbBack = new Button ("exit", 5 * width/6, 9 * height/10, width/8, width/14);
+  scorecloud = loadImage("scorecloud.png");
+  usercloud = loadImage("usercloud.png");
+  leaderboard = loadImage("leaderboard.png");
 }
 
 void LbMousePressed () {
@@ -53,38 +57,25 @@ void drawLeaderboard() {
   lbBack.draw();
   textSize = (int) (height/18);
   
-  fill(100);
-  stroke(20);
-  rect(width/8, height/8, 3*width/8, height/14);
-  fill(100);
-  stroke(20);
-  rect(4*width/8, height/8, 3*width/8, height/14);
-  textAlign(LEFT);
-  textSize(textSize);
-  fill(0);
-  text("Username", width/7, height/8 + textSize);
-  textAlign(LEFT);
-  textSize(textSize);
-  fill(0);
-  text("Highscore", width/2 + width/7 - width/8, height/8 + textSize);
+  image(usercloud, 1.95*width/8, height/20, 2*width/8, height/6);
+  image(scorecloud, 4.15*width/8, height/20, 2*width/8, height/6);
+  image(leaderboard, 1.5*width/8, height/20+height/6, 5*width/8, 2*height/3);
   
-  int i = 1;
+  int i = 0;
   for (String[] userdata: lb) {
-    fill(230);
-    stroke(20);
-    rect(width/8, height/8 + i*height/14, 3*width/8, height/14);
-    fill(230);
-    stroke(20);
-    rect(4*width/8, height/8 + i*height/14, 3*width/8, height/14);
+    // Username text
     textAlign(LEFT);
     textSize(textSize);
     fill(0);
-    text(userdata[0], width/7, height/8 + i*height/14 + textSize);
+    if (i >= 0 && i <= 2) text(userdata[0], width/3.7, 3 * height/13 + i*height/11.5 + textSize);
+    else text(userdata[0], width/3.7, 3 * height/13 + i*height/11.5 + textSize);
+    
+    // Score text
     textAlign(LEFT);
     textSize(textSize);
     fill(0);
     String score = String.valueOf((int) Float.parseFloat(userdata[1]));
-    text(score, width/2 + width/7 - width/8, height/8 + i*height/14 + textSize);
+    text(score, width/3.7 + 2.2*width/8, 3 * height/13 + i*height/11.5 + textSize);
     i++;
   }
   

@@ -121,8 +121,6 @@ void PlayPressed () {
 }
 
 void drawMenuScreen () {
-  background(50);
-  
   image(background, 0, 0);
   image(logo, width / 2 - width/6, height / 7 - width/14, width/3, width/7);
   
