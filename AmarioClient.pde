@@ -3,6 +3,7 @@ int FPS = 120;
 String ip = "192.168.1.80";
 int gamePort = 81;
 int loginPort = 80;
+int minSize = 0, maxSize = 100;
 
 void setup () {
   size(1280,720);
@@ -15,7 +16,6 @@ void setup () {
 }
 
 void draw () {
-  if (frameRate < 60) System.out.println(frameRate);
   if (gameScreen == 0) drawInitScreen ();
   else if (gameScreen == 1) drawMenuScreen ();
   else if (gameScreen == 2) drawGameScreen ();

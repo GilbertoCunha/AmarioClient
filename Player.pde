@@ -71,6 +71,8 @@ public class Player {
         creatureslock.unlock();
       } else if (nums[0].equals("obstacles")) {
         int num_obstacles = Integer.parseInt(nums[1]);
+        minSize = (int) (height * Float.parseFloat(nums[2]));
+        maxSize = (int) (height * Float.parseFloat(nums[3]));
         int x, y, size;
         obstacleslock.lock();
         obstacles = new Obstacle[num_obstacles];
@@ -179,10 +181,10 @@ public class Player {
       text(playername,3*width/4+textWidth("a"),height/30 + number*height/9 + 2*textWidth("a"));
       textAlign(LEFT);
       textSize(height/40);
-      text("Score: " + state.score, 3*width/4+textWidth("a"),height/30 + number*height/9 + 4.5*textWidth("a"));
+      text("Score: " + state.score, 3*width/4+textWidth("a"),height/30 + number*height/9 + 4.25*textWidth("a"));
       textAlign(RIGHT);
       textSize(height/40);
-      text("Size: " + state.size,3*width/4+width/4.5-textWidth("a"),height/30 + number*height/9 + 4.25*textWidth("a"));
+      text("Size:",3*width/4+width/8-textWidth("a"),height/30 + number*height/9 + 4.25*textWidth("a"));
       textAlign(LEFT);
       textSize(height/40);
       text("Fuel:",3*width/4+textWidth("a"),height/30 + number*height/9 + 6.5*textWidth("a"));
@@ -191,39 +193,27 @@ public class Player {
       float fuelW = (float) state.fuelW;
       float fuelA = (float) state.fuelA;
       float fuelD = (float) state.fuelD;
-      //nível alto de combustível: verde
-      if(fuelW > 0.6){
-        fill(0, 255, 0);
-      }
-      //nível médio de combustível: amarelo
-      else if(fuelW > 0.3){
-        fill(255, 255, 0);
-      }
-      //nível baixo de combustível: vermelho
-      else if(fuelW < 0.3){
-        fill(255, 0, 0);
-      }
-      rect(3*width/4+5.5*textWidth("a"),height/30 + number*height/9 + 4.9*textWidth("a"), height/3.5*fuelW, height/205);
-      if(fuelA > 0.6){
-        fill(0, 255, 0);
-      }
-      else if(fuelA > 0.3){
-        fill(255, 255, 0); 
-      }
-      else if(fuelA < 0.3){
-        fill(255, 0, 0);
-      }
-      rect(3*width/4+5.5*textWidth("a"),height/30 + number*height/9 + 5.7*textWidth("a"), height/3.5*fuelA, height/205);
-      if(fuelD > 0.6){
-        fill(0, 255, 0);
-      }
-      else if(fuelD > 0.3){
-        fill(255, 255, 0);  
-      }
-      else if(fuelD < 0.3){
-        fill(255, 0, 0);
-      }
-      rect(3*width/4+5.5*textWidth("a"),height/30 + number*height/9 + 6.5*textWidth("a"), height/3.5*fuelD, height/205);
+      
+      if(fuelW > 0.6) fill(0, 255, 0); //nível alto de combustível: verde
+      else if(fuelW > 0.3) fill(255, 255, 0); //nível médio de combustível: amarelo
+      else if(fuelW < 0.3) fill(255, 0, 0); //nível baixo de combustível: vermelho
+      rect(3*width/4+5.5*textWidth("a"),height/30 + number*height/9 + 4.9*textWidth("a"), height/3.35*fuelW, height/205);
+      
+      if(fuelA > 0.6) fill(0, 255, 0);
+      else if(fuelA > 0.3) fill(255, 255, 0);
+      else if(fuelA < 0.3) fill(255, 0, 0);
+      rect(3*width/4+5.5*textWidth("a"),height/30 + number*height/9 + 5.7*textWidth("a"), height/3.35*fuelA, height/205);
+      
+      if(fuelD > 0.6) fill(0, 255, 0);
+      else if(fuelD > 0.3) fill(255, 255, 0);
+      else if(fuelD < 0.3) fill(255, 0, 0);
+      rect(3*width/4+5.5*textWidth("a"),height/30 + number*height/9 + 6.5*textWidth("a"), height/3.35*fuelD, height/205);
+      
+      float size = (float) (state.size - minSize) / (float) (maxSize - minSize);
+      if(size > 0.6) fill(0, 255, 0);
+      else if(size > 0.3) fill(255, 255, 0);
+      else if(size < 0.3) fill(255, 0, 0);
+      rect(3*width/4+width/8-textWidth("a"),height/30 + number*height/9 + 3.5*textWidth("a"), height/6*size, height/205);
       
     }
     lock.unlock();
