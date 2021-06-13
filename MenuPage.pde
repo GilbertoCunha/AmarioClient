@@ -7,7 +7,7 @@ Button Instructions;
 Button Logout;
 Button DeleteAccount;
 Button ExitGame;
-PImage img;
+PImage loginimg;
 HashMap<String,Player> players;
 Lock playerslock;
 Player player;
@@ -16,36 +16,22 @@ Lock obstacleslock;
 
 void initMenuSetup() {
   
-  Play = new Button ( width / 2, 1 * height / 6, width/2, width/12);
-  Play.setup (base, highlight, pressed, "Play", true);
-  Play.textSize = menuTextSize;
-  
-  Leaderboard = new Button ( width / 2, 2 * height / 6, width/2, width/12);
-  Leaderboard.setup (base, highlight, pressed, "Leaderboard", true);
-  Leaderboard.textSize = menuTextSize;
-  
-  Instructions = new Button ( width / 2, 3 * height / 6, width/2, width/12);
-  Instructions.setup (base, highlight, pressed, "Instructions", true);
-  Instructions.textSize = menuTextSize;
-  
-  Logout = new Button ( width / 2, 5 * height / 6, width/2, width/12);
-  Logout.setup (base, highlight, pressed, "Logout", true); 
-  Logout.textSize = menuTextSize;
-  
-  DeleteAccount = new Button ( width / 2, 4 * height / 6, width/2, width/12);
-  DeleteAccount.setup (base, highlight, pressed, "Delete Account", true); 
-  DeleteAccount.textSize = menuTextSize;
+  Play = new Button ("play", width / 2, 3 * height / 7, width/5, width/9);
+  Leaderboard = new Button ("leaderboard", width / 2 - width/4, 3 * height / 7, width/5, width/9);
+  Instructions = new Button ("instructions", width / 2 + width/4, 3 * height / 7, width/5, width/9);
+  Logout = new Button ("logout", width / 2 + width/8, 5 * height / 7, width/5, width/9);
+  DeleteAccount = new Button ("delaccount", width / 2 - width/8, 5 * height / 7, width/5, width/9);
   
   playerslock = new ReentrantLock();
   players = new HashMap<String,Player>();
   
   playerslock.lock();
-  player = new Player(localuser.username);
+  player = new Player(localuser.username, logo);
   playerslock.unlock();
   
   obstacleslock = new ReentrantLock();
   
-  img  = loadImage("bobpicanha.png");
+  // loginimg  = loadImage("bobpicanha.png");
   
 }
 
@@ -112,6 +98,7 @@ String PlayResponse (String response) {
     gameScreen = 5;
   } else {
     r = "Entered game";
+    numplayers++;
     gameScreen = 2;
     setupGame();
   }
@@ -121,7 +108,7 @@ String PlayResponse (String response) {
 
 void PlayPressed () {
   // Put localplayer in player list
-  players.put(localuser.username,new Player(localuser.username));
+  players.put(localuser.username,new Player(localuser.username, player_avatars[numplayers]));
   
   // Connect with the server
   player.connect(ip, gamePort);
@@ -133,8 +120,12 @@ void PlayPressed () {
 }
 
 void drawMenuScreen () {
-  background(255);
-  image(img,0,0,width,height);
+  background(50);
+  
+  image(background, 0, 0);
+  image(logo, width / 2 - width/6, height / 7 - width/14, width/3, width/7);
+  
+  //image(loginimg,0,0,width,height);
   Play.draw();
   Leaderboard.draw();
   Instructions.draw();

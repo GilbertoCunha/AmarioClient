@@ -12,6 +12,8 @@ Thread receiver;
 Iterator hm_iterator;
 Button Quit;
 Receiver runnable;
+PImage[] player_avatars;
+PImage floor, obstacle_img;
 
 void setupGame(){
   keys = new HashMap<Integer,Boolean>();
@@ -22,9 +24,11 @@ void setupGame(){
   creatureslock = new ReentrantLock();
   creatures = new HashMap<String,Creature>();
   
-  Quit = new Button ( width / 20, height / 20, height / 8, height/14);
-  Quit.setup (base, highlight, pressed, "Quit", true); 
-  Quit.textSize = (int) menuTextSize / 2;
+  Quit = new Button ("exit", width / 20, height / 20, height / 8, height/14);
+  
+  floor = loadImage("floor.png");
+  floor.resize(width,height);
+  obstacle_img = loadImage("obstacles.png");
 }
 
 void playerkeyPressed () {
@@ -59,6 +63,7 @@ void GameMousePressed () {
 
 void drawGameScreen () {
   background(255);
+  image(floor, 0, 0);
   
   // Draw obstacles
   obstacleslock.lock();

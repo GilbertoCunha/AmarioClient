@@ -13,8 +13,15 @@ Button Login;
 Button CreateAccount;
 Button ChangeIP;
 
+PImage logo, background;
+
 void initSetup () {
   localuser = null;
+  
+  logo = loadImage("amario.png");
+  logo.resize(width/2, width/12);
+  background = loadImage("background.png");
+  background.resize(width,height);
   
   // Criar textbox para o IP
   IP = new TEXTBOX();
@@ -36,16 +43,12 @@ void initSetup () {
   Password.showText = false;
   
   // Criar os botões de login, de criar conta e mudar configuração
-  ChangeIP = new Button (width / 6, 4 * height / 5, (int) (height/1.8), (int) (height/10));
-  ChangeIP.setup (base, highlight, pressed, "Change IP", true);
-  Login = new Button (3*width / 6, 4 * height / 5, (int) (height/1.8), (int) (height/10));
-  Login.setup (base, highlight, pressed, "Login", true);
-  CreateAccount = new Button (5 * width / 6, 4 * height / 5, (int) (height/1.8), (int) (height/10));
-  CreateAccount.setup (base, highlight, pressed, "Create Account", true);
+  ChangeIP = new Button ("changeip", width / 6, 4 * height / 5, (int) (height/3), (int) (height/6));
+  Login = new Button ("login", 3*width / 6, 4 * height / 5, (int) (height/3), (int) (height/6));
+  CreateAccount = new Button ("createaccount", 5 * width / 6, 4 * height / 5, (int) (height/3), (int) (height/6));
   
   // Criar botão de sair do jogo
-  ExitGame = new Button (width / 10, height / 20, (int) (height / 3.5), height/14);
-  ExitGame.setup (base, highlight, pressed, "Exit Game", true);
+  ExitGame = new Button ("exit", width / 10, height / 10, (int) (height / 4.5), height/7);
 }
 
 void initKeyPressed () {
@@ -100,7 +103,8 @@ void ChangeIPPressed () {
 }
 
 void drawInitScreen () {
-  background(255);
+  image(background, 0, 0);
+  image(logo, width / 2 - width/6, height / 7 - width/14, width/3, width/7);
   Username.DRAW();
   Password.DRAW();
   IP.DRAW();
@@ -113,9 +117,10 @@ void drawInitScreen () {
   else if (ExitGame.isPressed()) quit();
   else if (ChangeIP.isPressed()) ChangeIPPressed();
   if (response != null) {
-    textSize (20);
-    textAlign(LEFT);
-    text (response, ChangeIP.posX, ChangeIP.posY + height/7);
+    textSize (height/20);
+    textAlign(CENTER);
+    fill(0);
+    text (response, width/2, 3.3 * height/5);
   }
 }
 

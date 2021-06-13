@@ -35,11 +35,13 @@ public class Player {
   PrintStream out;
   BufferedReader read;
   State state;
+  PImage img;
   
-  Player (String name) {
+  Player (String name, PImage img) {
     // Just to establish connections
     this.playername = name;
     this.lock = new ReentrantLock();
+    this.img = img;
     this.state = null;
   }
   
@@ -65,6 +67,7 @@ public class Player {
         players.remove(nums[0]);
         playerslock.unlock();
         if (nums[0].equals(this.playername)) r = 1;
+        numplayers--;
       } else if (nums[1].equals("died")) {
         creatureslock.lock();
         creatures.remove(nums[0]);
@@ -73,6 +76,9 @@ public class Player {
         int num_obstacles = Integer.parseInt(nums[1]);
         minSize = (int) (height * Float.parseFloat(nums[2]));
         maxSize = (int) (height * Float.parseFloat(nums[3]));
+        player_avatars[0].resize(minSize,minSize);
+        player_avatars[1].resize(minSize,minSize);
+        player_avatars[2].resize(minSize,minSize);
         int x, y, size;
         obstacleslock.lock();
         obstacles = new Obstacle[num_obstacles];
@@ -110,7 +116,9 @@ public class Player {
           
           playerslock.lock();
           if (!players.containsKey(nums[0])) {
-            players.put(nums[0], new Player(nums[0]));
+            PImage player_image = player_avatars[numplayers];
+            players.put(nums[0], new Player(nums[0], player_image));
+            numplayers++;
           } 
           players.get(nums[0]).changeState(x, y, angle, size, score, fuelW, fuelA, fuelD);
           playerslock.unlock();
@@ -173,7 +181,7 @@ public class Player {
   public void drawstatus(int number) {
     lock.lock();
     if (state != null) {
-      fill(160,160,160,20);
+      fill(230, 150);
       rect(3*width/4, height/30 + number*height/9, width/4.5, height/10, height/100);
       fill(0);
       textAlign(LEFT);
@@ -222,16 +230,7 @@ public class Player {
   public void draw() {
     lock.lock();
     if (this.state != null) {
-      fill(200);
-      if(this.playername == localuser.username){
-        strokeWeight(5);
-        stroke(0, 255, 0);
-      }
-      else if(this.playername != localuser.username){
-        noStroke();
-      }
-      int size = 2 * state.size;
-      ellipse(state.x, state.y, size, size);
+      image(this.img, state.x - state.size, state.y - state.size, 2*state.size, 2*state.size);
       stroke(0);
       strokeWeight(2);
       drawArrow(state.x, state.y, state.size, state.angle);

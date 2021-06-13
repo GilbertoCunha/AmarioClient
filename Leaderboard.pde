@@ -33,14 +33,13 @@ void sortLeaderboard (String[][] s, int N) {
 
 void getLeaderboard() {
   localuser.connect(ip, loginPort);
-  response = localuser.request(":leaderboard 10" );
+  response = localuser.request(":leaderboard 8" );
   LeaderboardResponse (response);
   localuser.close();
 }
 
 void setupLeaderboard() {
-  lbBack = new Button (5 * width/6, 9 * height/10, width/8, width/20);
-  lbBack.setup (base, highlight, pressed, "Go Back", true);
+  lbBack = new Button ("exit", 5 * width/6, 9 * height/10, width/8, width/14);
 }
 
 void LbMousePressed () {
@@ -48,14 +47,14 @@ void LbMousePressed () {
 }
 
 void drawLeaderboard() {
-  background(255);
+  image(background, 0, 0);
   
   lbBack.draw();
   
-  fill(200);
+  fill(100);
   stroke(20);
   rect(width/8, height/8, 3*width/8, height/14);
-  fill(200);
+  fill(100);
   stroke(20);
   rect(4*width/8, height/8, 3*width/8, height/14);
   textAlign(LEFT);
@@ -69,10 +68,10 @@ void drawLeaderboard() {
   
   int i = 1;
   for (String[] userdata: lb) {
-    fill(200);
+    fill(230);
     stroke(20);
     rect(width/8, height/8 + i*height/14, 3*width/8, height/14);
-    fill(200);
+    fill(230);
     stroke(20);
     rect(4*width/8, height/8 + i*height/14, 3*width/8, height/14);
     textAlign(LEFT);

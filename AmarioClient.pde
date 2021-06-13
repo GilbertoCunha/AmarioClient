@@ -4,8 +4,15 @@ String ip = "192.168.1.80";
 int gamePort = 81;
 int loginPort = 80;
 int minSize = 0, maxSize = 100;
+int numplayers = 0;
 
 void setup () {
+  noSmooth();
+  player_avatars = new PImage[3];
+  player_avatars[0] = loadImage("mario.png"); 
+  player_avatars[1] = loadImage("peach.png");
+  player_avatars[2] = loadImage("wario.png");
+  
   size(1280,720);
   frameRate(FPS);
   initSetup ();

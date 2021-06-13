@@ -10,9 +10,7 @@ void setupInstructions () {
   a = "Accelerate left";
   d = "Accelerate right";
   
-  GoBack = new Button (width/8, height/10, width/8, height/10);
-  GoBack.setup (base, highlight, pressed, "Go Back", true);
-  
+  GoBack = new Button ("exit", width/8, height/10, width/8, height/8);
 }  
 
 void InstructionsMousePressed () {
@@ -20,7 +18,7 @@ void InstructionsMousePressed () {
 }
 
 void drawInstructions () {  
-  background(255);
+  image(background, 0, 0);
   
   textSize(100);
   textAlign(CENTER);

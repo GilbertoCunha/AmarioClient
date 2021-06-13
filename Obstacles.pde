@@ -9,8 +9,6 @@ class Obstacle {
   
   void draw() {
     int size = 2 * this.size;
-    fill(144,133,79);
-    noStroke();
-    ellipse(x, y, size, size);
+    image(obstacle_img, x-size/2,y-size/2,size,size);
   }
 }

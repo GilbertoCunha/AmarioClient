@@ -9,8 +9,8 @@ public class TEXTBOX {
    public color BackgroundSelected = color(160, 160, 160);
    public color Border = color(30, 30, 30);
    
-   public boolean BorderEnable = false;
-   public int BorderWeight = 1;
+   public boolean BorderEnable = true;
+   public int BorderWeight = height/120;
    
    public String Text = "";
    public int TextLength = 0;
@@ -81,8 +81,9 @@ public class TEXTBOX {
             boolean isKeyCapitalLetter = (KEY >= 'A' && KEY <= 'Z');
             boolean isKeySmallLetter = (KEY >= 'a' && KEY <= 'z');
             boolean isKeyNumber = (KEY >= '0' && KEY <= '9');
+            boolean isSpecialCharacter = (KEY == '.' || KEY == '_');
       
-            if (isKeyCapitalLetter || isKeySmallLetter || isKeyNumber) {
+            if (isKeyCapitalLetter || isKeySmallLetter || isKeyNumber || isSpecialCharacter) {
                addText(KEY);
             }
          }
