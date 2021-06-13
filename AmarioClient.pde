@@ -5,15 +5,16 @@ int gamePort = 81;
 int loginPort = 80;
 int minSize = 0, maxSize = 100;
 int numplayers = 0;
+boolean[] avatar_free = new boolean[3];
 
 void setup () {
   noSmooth();
-  player_avatars = new PImage[3];
-  player_avatars[0] = loadImage("mario.png"); 
-  player_avatars[1] = loadImage("peach.png");
-  player_avatars[2] = loadImage("wario.png");
+  player_avatars = new String[3];
+  player_avatars[0] = "mario.png"; avatar_free[0] = true;
+  player_avatars[1] = "peach.png"; avatar_free[1] = true;
+  player_avatars[2] = "wario.png"; avatar_free[2] = true;
   
-  size(1280,720);
+  fullScreen();
   frameRate(FPS);
   initSetup ();
   // initMenuSetup();

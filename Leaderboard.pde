@@ -1,5 +1,6 @@
 String[][] lb;
-int textSize = 40;
+int textSize = (int) (height/18);
+// int textSize = 40;
 Button lbBack;
 
 void LeaderboardResponse(String response) {
@@ -50,6 +51,7 @@ void drawLeaderboard() {
   image(background, 0, 0);
   
   lbBack.draw();
+  textSize = (int) (height/18);
   
   fill(100);
   stroke(20);

@@ -1,6 +1,6 @@
 public class TEXTBOX {
-   public int X = 0, Y = 0, H = 50, W = 600;
-   public int TEXTSIZE = 30;
+   public int X = 0, Y = 0, H = (int) (height/14.4), W = (int) (width/2.1);
+   public int TEXTSIZE = height/24;
    String name;
    
    // COLORS

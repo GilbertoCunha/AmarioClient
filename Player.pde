@@ -28,7 +28,7 @@ void drawArrow(int cx, int cy, int len, float angle){
 }
 
 public class Player {
-  String playername;
+  String playername, imgpath;
   Lock lock;
   Socket s;
   InputStream input;
@@ -37,11 +37,12 @@ public class Player {
   State state;
   PImage img;
   
-  Player (String name, PImage img) {
+  Player (String name, String imgpath) {
     // Just to establish connections
     this.playername = name;
     this.lock = new ReentrantLock();
-    this.img = img;
+    this.imgpath = imgpath;
+    this.img = loadImage(imgpath);
     this.state = null;
   }
   
@@ -64,9 +65,11 @@ public class Player {
       
       if (nums[1].equals("left") || nums[1].equals("lost")) {
         playerslock.lock();
+        String imgpath = players.get(nums[0]).imgpath;
         players.remove(nums[0]);
         playerslock.unlock();
         if (nums[0].equals(this.playername)) r = 1;
+        for (int j=0; j<3; ++j) if (imgpath.equals(player_avatars[j])) avatar_free[j] = true;
         numplayers--;
       } else if (nums[1].equals("died")) {
         creatureslock.lock();
@@ -76,9 +79,6 @@ public class Player {
         int num_obstacles = Integer.parseInt(nums[1]);
         minSize = (int) (height * Float.parseFloat(nums[2]));
         maxSize = (int) (height * Float.parseFloat(nums[3]));
-        player_avatars[0].resize(minSize,minSize);
-        player_avatars[1].resize(minSize,minSize);
-        player_avatars[2].resize(minSize,minSize);
         int x, y, size;
         obstacleslock.lock();
         obstacles = new Obstacle[num_obstacles];
@@ -116,9 +116,13 @@ public class Player {
           
           playerslock.lock();
           if (!players.containsKey(nums[0])) {
-            PImage player_image = player_avatars[numplayers];
-            players.put(nums[0], new Player(nums[0], player_image));
-            numplayers++;
+            String player_image; int j;
+            for (j = 0; j<3 && !avatar_free[j]; ++j);
+            player_image = player_avatars[j];
+            Player novo = new Player(nums[0], player_image);
+            novo.img.resize(minSize, minSize);
+            players.put(nums[0], novo);
+            avatar_free[j] = false;
           } 
           players.get(nums[0]).changeState(x, y, angle, size, score, fuelW, fuelA, fuelD);
           playerslock.unlock();
@@ -136,11 +140,8 @@ public class Player {
           angle = Float.parseFloat(nums[5]);
           
           creatureslock.lock();
-          if (!creatures.containsKey(nums[0])) {
-            creatures.put(nums[0], new Creature(cor, x, y, size, angle));
-          } else {
-            creatures.get(nums[0]).changeState(x, y, size, angle);
-          }
+          if (!creatures.containsKey(nums[0])) creatures.put(nums[0], new Creature(cor, x, y, size, angle));
+          else creatures.get(nums[0]).changeState(x, y, size, angle);
           creatureslock.unlock();
         }
       }

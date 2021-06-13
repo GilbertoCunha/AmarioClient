@@ -1,4 +1,4 @@
-int menuTextSize = 60;
+int k, menuTextSize = 60;
 
 // Botões de login e criar conta
 Button Play;
@@ -26,7 +26,7 @@ void initMenuSetup() {
   players = new HashMap<String,Player>();
   
   playerslock.lock();
-  player = new Player(localuser.username, logo);
+  player = new Player(localuser.username, "amario.png");
   playerslock.unlock();
   
   obstacleslock = new ReentrantLock();
@@ -108,7 +108,8 @@ String PlayResponse (String response) {
 
 void PlayPressed () {
   // Put localplayer in player list
-  players.put(localuser.username,new Player(localuser.username, player_avatars[numplayers]));
+  players.put(localuser.username,new Player(localuser.username, player_avatars[0]));
+  avatar_free[0] = false;
   
   // Connect with the server
   player.connect(ip, gamePort);

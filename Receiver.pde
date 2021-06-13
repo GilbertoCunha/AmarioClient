@@ -11,6 +11,8 @@ class Receiver implements Runnable {
     players.clear();
     creatures.clear();
     
+    for (int j=0; j<3; ++j) avatar_free[j] = true;
+    
     // Login again
     localuser.connect(ip, loginPort);
     response = localuser.request(":login " + localuser.username + " " + localuser.password);

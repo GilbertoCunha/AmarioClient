@@ -12,7 +12,7 @@ Thread receiver;
 Iterator hm_iterator;
 Button Quit;
 Receiver runnable;
-PImage[] player_avatars;
+String[] player_avatars;
 PImage floor, obstacle_img;
 
 void setupGame(){
