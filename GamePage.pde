@@ -65,10 +65,10 @@ void drawGameScreen () {
   background(255);
   image(floor, 0, 0);
   
-  fill(230,89,255);
+  /*fill(230,89,255);
   textAlign(LEFT);
   textSize(height/18);
-  text(String.valueOf(frameRate), 0, height);
+  text(String.valueOf((int) (frameRate)), 0, height);*/
   
   // Draw obstacles
   obstacleslock.lock();
